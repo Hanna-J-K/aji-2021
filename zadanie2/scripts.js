@@ -1,4 +1,5 @@
 "use strict"
+const SECRET_KEY = "$2b$10$SYBBWQ/3KaddUVFCFtLzGeDx0W7uRshPwTmg09YnutmImwBRuSB2G"
 let todoList = []; //declares a new array for Your todo list
 
 let initList = function() {
@@ -23,38 +24,24 @@ let initList = function() {
         // of course the lecture test mentioned above will not take place U_U
     );
 }
-$.ajax({
- // copy Your bin identifier here. It can be obtained in the dashboard
- url: 'https://api.jsonbin.io/b/591a01528c8d6246313db019/latest',
- type: 'GET',
- headers: { //Required only if you are trying to access a private bin
-   'secret-key': <SECRET_KEY>
- },
- success: (data) => {
-   console.log(data);
- },
- error: (err) => {
-   console.log(err.responseJSON);
- }
-});}
 
+$.ajax({
+  url: "https://api.jsonbin.io/b/6160a4239548541c29x",
+  type: "GET",
+  headers: {
+    'secret-key': SECRET_KEY
+  },
+  success: (data) => {
+    // console.log(data);
+    todoList = data;
+  },
+  error: (err) => {
+    console.log(err.responseJSON);
+  }
+});
 
 // initList();
-$.ajax({
-    // copy Your bin identifier here. It can be obtained in the dashboard
-    url: 'https://api.jsonbin.io/b/591a01528c8d6246313db019/latest',
-    type: 'GET',
-    headers: { //Required only if you are trying to access a private bin
-      'secret-key': <SECRET_KEY>
-    },
-    success: (data) => {
-      console.log(data);
-    },
-    error: (err) => {
-      console.log(err.responseJSON);
-    }
-   });
-   
+
 let updateTodoList = function() {
     let todoListDiv = document.getElementById("todoListView");
 
@@ -92,9 +79,11 @@ setInterval(updateTodoList, 1000)
 
 let deleteTodo = function(index) {
     todoList.splice(index,1);
+    updateJSONbin();
 }
 
 let addTodo = function() {
+  updateJSONbin();
   //get the elements in the form
     let inputTitle = document.getElementById("inputTitle");
     let inputDescription = document.getElementById("inputDescription");
@@ -115,4 +104,22 @@ let addTodo = function() {
   //add item to the list
     todoList.push(newTodo);
     window.localStorage.setItem("todos", JSON.stringify(todoList));
+}
+
+let updateJSONbin = function() {
+    $.ajax({
+        url: 'https://api.jsonbin.io/b/6160a4239548541c29x',
+        type: 'PUT',
+        headers: { //Required only if you are trying to access a private bin
+            'secret-key': SECRET_KEY
+        },
+        contentType: 'application/json',
+        data: JSON.stringify(todoList),
+        success: (data) => {
+            console.log(data);
+        },
+        error: (err) => {
+            console.log(err.responseJSON);
+        }
+    });
 }
