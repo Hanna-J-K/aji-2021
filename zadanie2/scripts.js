@@ -76,10 +76,10 @@ let deleteTodo = function(index) {
 
 let addTodo = function() {
     //get the elements in the form
-    let inputTitle = $("inputTitle");
-    let inputDescription = $("inputDescription");
-    let inputPlace = $("inputPlace");
-    let inputDate = $("inputDate");
+    let inputTitle = $("#inputTitle").get(0);
+    let inputDescription = $("#inputDescription").get(0);
+    let inputPlace = $("#inputPlace").get(0);
+    let inputDate = $("#inputDate").get(0);
     //get the values from the form
     let newTitle = inputTitle.value;
     let newDescription = inputDescription.value;
