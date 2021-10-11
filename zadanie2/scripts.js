@@ -1,80 +1,73 @@
 "use strict"
-const SECRET_KEY = "$2b$10$SYBBWQ/3KaddUVFCFtLzGeDx0W7uRshPwTmg09YnutmImwBRuSB2G"
+const SECRET_KEY = "$2b$10$OhbmQ/buJ2hV4lLkDG3u7uhQrFwHP5OtoWsgTdjzIyw0Nz7FAFwvO"
 let todoList = []; //declares a new array for Your todo list
 
-let initList = function() {
+let initList = () => {
     let savedList = window.localStorage.getItem("todos");
     if (savedList != null)
         todoList = JSON.parse(savedList);
+
     else
-//code creating a default list with 2 items
-    todoList.push(
-    {
-        title: "Learn JS",
-        description: "Create a demo application for my TODO's",
-        place: "445",
-        dueDate: new Date(2019,10,16)
-    },
-    {
-        title: "Lecture test",
-        description: "Quick test from the first three lectures",
-        place: "F6",
-        dueDate: new Date(2019,10,17)
-    }
-        // of course the lecture test mentioned above will not take place U_U
-    );
+        //code creating a default list with 2 items
+        todoList.push(
+            {
+                title: "Learn JS",
+                description: "Create a demo application for my TODO's",
+                place: "445",
+                dueDate: new Date(2019, 10, 16)
+            },
+            {
+                title: "Lecture test",
+                description: "Quick test from the first three lectures",
+                place: "F6",
+                dueDate: new Date(2019, 10, 17)
+            });
 }
 
 $.ajax({
-  url: "https://api.jsonbin.io/b/6160a4239548541c29x",
-  type: "GET",
-  headers: {
-    'secret-key': SECRET_KEY
-  },
-  success: (data) => {
-    // console.log(data);
-    todoList = data;
-  },
-  error: (err) => {
-    console.log(err.responseJSON);
-  }
+    url: "https://api.jsonbin.io/b/6163e99d4a82881d6c5e6afa",
+    type: "GET",
+    headers: {
+        'secret-key': SECRET_KEY
+    },
+    success: (data) => {
+        todoList = data;
+    },
+    error: (err) => {
+        console.log(err.responseJSON);
+    }
 });
 
-// initList();
-
-let updateTodoList = function() {
-    let todoListDiv = document.getElementById("todoListView");
+let updateTodoList = () => {
+    let todoListTable = $("#todoListView");
 
     //remove all elements
-    while (todoListDiv.firstChild) {
-        todoListDiv.removeChild(todoListDiv.firstChild);
-    }
+    // while (todoListTable.first().next()) {
+    //     todoListTable.first().next().remove()
+    // }
 
     //add all elements
-    let filterInput = document.getElementById("inputSearch")
+    let filterInput = $("#inputSearch");
+    console.log("todoList => " + todoList);
     for (let todo in todoList) {
         if ((filterInput.value == "") ||
-         (todoList[todo].title.includes(filterInput.value)) ||
-         (todoList[todo].description.includes(filterInput.value))) {
-
+            (todoList[todo].title.includes(filterInput.value)) ||
+            (todoList[todo].description.includes(filterInput.value))) {
         }
-        let newElement = document.createElement("p");
-        let newContent = document.createTextNode(
-            todoList[todo].title + " " + todoList[todo].description);
-        newElement.appendChild(newContent);
-        let newDeleteButton = document.createElement("input");
-        newDeleteButton.type = "button";
-        newDeleteButton.value = "x";
-        newDeleteButton.addEventListener("click",
-            function() {
-                deleteTodo(todo);
-            }
-        );
-        newElement.appendChild(newDeleteButton)     
-        todoListDiv.appendChild(newElement);
+        let newRow = $("<tr></tr>");
+        newRow.appendTo(todoListTable);
+        // tutaj wyodrebnij funkcje z tworzeniem tr'a
+        for (let field of Object.values(todoList[todo])) {
+            let newTableData = $(`<td>${field}</td>`);
+            newTableData.appendTo(newRow);
+        }
+        let newDeleteButton = $("<input type='button' value='x')></input>").click(function () {
+            deleteTodo(todo);
+        });
+        newDeleteButton.appendTo(newRow);
     }
-           
 }
+
 setInterval(updateTodoList, 1000)
 
 let deleteTodo = function(index) {
@@ -83,7 +76,7 @@ let deleteTodo = function(index) {
 }
 
 let addTodo = function() {
-  updateJSONbin();
+    updateJSONbin();
   //get the elements in the form
     let inputTitle = document.getElementById("inputTitle");
     let inputDescription = document.getElementById("inputDescription");
