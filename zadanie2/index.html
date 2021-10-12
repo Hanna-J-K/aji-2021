@@ -8,42 +8,71 @@
     <title>MyTODO App</title>
 </head>
 <body>
-    <nav class="navbar-nav alert alert-primary">
-        <h1>MyNotes</h1>
+
+    <nav class="navbar navbar-expand-lg py-4 bg-primary justify-content-center">
+        <a class="navbar-brand text-white" href="#">MY NOTES</a>
     </nav>
-    <div class="input-group">
-        <label>Search</label>
-        <input type="text" id="inputSearch" placeholder="Type Your search here..."/>
+
+    <div class="container mt-3">
+        <div class="alert alert-primary">Add a new note below!</div>
     </div>
-    <form>  
-        <div class="row form-group">
-            <label class="form-control-lg offset-4 col-2">Title</label>
-            <input type="text" class="form-control-lg col-2" id="inputTitle" placeholder="New Todo"/>
+
+    <div class="container">
+        <div class="input-group input-group pb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text bg-secondary text-light">Search</span>
+            </div>
+            <input type="text" class="form-control col-3" id="inputSearch" placeholder="Type your search here..."/>
+            <div class="input-group-prepend">
+                <span class="input-group-text bg-secondary text-light">Filter by date from:</span>
+            </div>
+            <input type="date" class="form-control text-secondary col-2" id="inputFilterStartingDate"/>
+            <div class="input-group-prepend">
+                <span class="input-group-text bg-secondary text-light">to:</span>
+            </div>
+            <input type="date" class="form-control text-secondary col-2" id="inputFilterEndingDate"/>
         </div>
-        <div class="row form-group">
-            <label class="form-control-lg offset-4 col-2">Description</label>
-            <input type="text" class="form-control-lg col-2" id="inputDescription"/>
-        </div>
-        <div class="row form-group">
-            <label class="form-control-lg offset-4 col-2">Place</label>
-            <input type="text" class="form-control-lg col-2" id="inputPlace"/>
-        </div>
-        <div class="row form-group">
-            <label class="form-control-lg offset-4 col-2">Due date</label>
-            <input type="date" class="form-control-lg col-2" id="inputDate"/>
-        </div>
-        <div class="row form-group">
-            <input type="button" class="btn btn-primary offset-6" value="ADD" onclick="addTodo()"/>
-        </div>
-    </form>
-    <table class="table table-hover" id="todoListView">
-        <tr class="bg-info">
-            <th>Title</th>
-            <th>Description</th>
-            <th>Place</th>
-            <th>Due date</th>
-        </tr>
-    </table>
+    </div>
+
+    <div class="container">
+        <form>
+            <div class="row justify-content-start form-group">
+                <label class="form-control-lg col-2">Title</label>
+                <input type="text" class="form-control-lg col-4" id="inputTitle" placeholder="New Todo"/>
+            </div>
+            <div class="row justify-content-start form-group">
+                <label class="form-control-lg col-2">Description</label>
+                <input type="text" class="form-control-lg col-4" id="inputDescription" placeholder="New Description"/>
+            </div>
+            <div class="row justify-content-start form-group">
+                <label class="form-control-lg col-2">Place</label>
+                <input type="text" class="form-control-lg col-4" id="inputPlace" placeholder="New Place"/>
+            </div>
+            <div class="row justify-content-start form-group">
+                <label class="form-control-lg col-2">Due date</label>
+                <input type="date" class="form-control-lg text-secondary col-2" id="inputDate"/>
+            </div>
+            <div class="row justify-content-center form-group">
+                <input type="button" class="btn btn-lg btn-primary" value="ADD" onclick="addTodo()"/>
+            </div>
+        </form>
+    </div>
+
+    <div class="container mt-3">
+        <div class="alert alert-success">Here are all your notes :)</div>
+    </div>
+
+    <div class="container">
+        <table class="table table-hover" id="todoListView">
+            <tr class="bg-success text-light">
+                <th colspan="2">Title</th>
+                <th colspan="2">Description</th>
+                <th>Place</th>
+                <th>Due date</th>
+            </tr>
+        </table>
+    </div>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>

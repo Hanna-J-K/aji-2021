@@ -51,7 +51,7 @@ let updateTodoList = () => {
             (todoList[todo].description.includes(filterInput.value))) {
         }
         let row = makeNewTableRow(todoList[todo]).appendTo(todoListTable);
-        let newDeleteButton = $("<input type='button' value='x')></input>").click(function () {
+        let newDeleteButton = $("<input type='button' class='btn btn-danger' value='X')></input>").click(function () {
             deleteTodo(todo);
         });
         newDeleteButton.appendTo(row);
@@ -60,8 +60,8 @@ let updateTodoList = () => {
 
 const makeNewTableRow = (todo) => {
     let newRow = $("<tr></tr>");
-    $(`<td>${todo.title}</td>`).appendTo(newRow);
-    $(`<td>${todo.description}</td>`).appendTo(newRow);
+    $(`<td colspan='2'>${todo.title}</td>`).appendTo(newRow);
+    $(`<td colspan='2'>${todo.description}</td>`).appendTo(newRow);
     $(`<td>${todo.place}</td>`).appendTo(newRow);
     $(`<td>${todo.dueDate}</td>`).appendTo(newRow);
     return newRow;
