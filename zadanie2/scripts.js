@@ -26,11 +26,11 @@ let updateTodoList = () => {
     let dateFrom = $("#inputFilterStartingDate")
     let dateTo = $("#inputFilterEndingDate")
     for (let todo in todoList) {
-        console.log('jakies gowno' + dateFrom.value)
+        console.log('dobra data polska data ' + dateFrom.val())
         if ((filterInput.value == "") ||
             (todoList[todo].title.includes(filterInput.value)) ||
             (todoList[todo].description.includes(filterInput.value)) ||
-            (todoList[todo].dueDate >= new Date(dateFrom.value) && todoList[todo].dueDate <= new Date(dateTo.value))) {
+            (todoList[todo].dueDate >= new Date(dateFrom.val()) && todoList[todo].dueDate <= new Date(dateTo.val()))) {
         }
         let row = makeNewTableRow(todoList[todo]).appendTo(todoListTable);
         let newDeleteButton = $("<input type='button' class='btn btn-danger' value='X')></input>").click(function () {
