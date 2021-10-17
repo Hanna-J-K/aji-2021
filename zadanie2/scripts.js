@@ -1,28 +1,6 @@
 "use strict"
 const SECRET_KEY = "$2b$10$OhbmQ/buJ2hV4lLkDG3u7uhQrFwHP5OtoWsgTdjzIyw0Nz7FAFwvO"
-let todoList = []; //declares a new array for Your todo list
-
-// let initList = () => {
-//     let savedList = window.localStorage.getItem("todos");
-//     if (savedList != null)
-//         todoList = JSON.parse(savedList);
-
-//     else
-//         //code creating a default list with 2 items
-//         todoList.push(
-//             {
-//                 title: "Learn JS",
-//                 description: "Create a demo application for my TODO's",
-//                 place: "445",
-//                 dueDate: new Date(2019, 10, 16)
-//             },
-//             {
-//                 title: "Lecture test",
-//                 description: "Quick test from the first three lectures",
-//                 place: "F6",
-//                 dueDate: new Date(2019, 10, 17)
-//             });
-// }
+let todoList = [];
 
 $.ajax({
     url: "https://api.jsonbin.io/b/6163e99d4a82881d6c5e6afa",
@@ -45,10 +23,14 @@ let updateTodoList = () => {
 
     //add all elements
     let filterInput = $("#inputSearch");
+    let dateFrom = $("#inputFilterStartingDate")
+    let dateTo = $("#inputFilterEndingDate")
     for (let todo in todoList) {
+        console.log('jakies gowno' + dateFrom.value)
         if ((filterInput.value == "") ||
             (todoList[todo].title.includes(filterInput.value)) ||
-            (todoList[todo].description.includes(filterInput.value))) {
+            (todoList[todo].description.includes(filterInput.value)) ||
+            (todoList[todo].dueDate >= new Date(dateFrom.value) && todoList[todo].dueDate <= new Date(dateTo.value))) {
         }
         let row = makeNewTableRow(todoList[todo]).appendTo(todoListTable);
         let newDeleteButton = $("<input type='button' class='btn btn-danger' value='X')></input>").click(function () {
