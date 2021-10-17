@@ -2,19 +2,19 @@
 const SECRET_KEY = "$2b$10$OhbmQ/buJ2hV4lLkDG3u7uhQrFwHP5OtoWsgTdjzIyw0Nz7FAFwvO"
 let todoList = [];
 
-$.ajax({
-    url: "https://api.jsonbin.io/b/6163e99d4a82881d6c5e6afa",
-    type: "GET",
-    headers: {
-        'secret-key': SECRET_KEY
-    },
-    success: (data) => {
-        todoList = data;
-    },
-    error: (err) => {
-        console.log(err.responseJSON);
-    }
-});
+// $.ajax({
+//     url: "https://api.jsonbin.io/b/6163e99d4a82881d6c5e6afa",
+//     type: "GET",
+//     headers: {
+//         'secret-key': SECRET_KEY
+//     },
+//     success: (data) => {
+//         todoList = data;
+//     },
+//     error: (err) => {
+//         console.log(err.responseJSON);
+//     }
+// });
 
 let updateTodoList = () => {
     const todoListTable = $("#todoListView");
@@ -22,21 +22,20 @@ let updateTodoList = () => {
     $('tr:not(:first)').remove()  
 
     //add all elements
-    let filterInput = $("#inputSearch");
-    let dateFrom = $("#inputFilterStartingDate")
-    let dateTo = $("#inputFilterEndingDate")
+    let filterInputValue = $("#inputSearch").val().toLowerCase();
+    let dateFromValue = $("#inputFilterStartingDate").val()
+    let dateToValue = $("#inputFilterEndingDate").val()
     for (let todo in todoList) {
-        console.log('dobra data polska data ' + dateFrom.val())
-        if ((filterInput.value == "") ||
-            (todoList[todo].title.includes(filterInput.value)) ||
-            (todoList[todo].description.includes(filterInput.value)) ||
-            (todoList[todo].dueDate >= new Date(dateFrom.val()) && todoList[todo].dueDate <= new Date(dateTo.val()))) {
+        if (((filterInputValue == "") && (((dateFromValue == "") || (dateToValue == "")))) ||
+            (todoList[todo].title.toLowerCase().includes(filterInputValue) && (filterInputValue != "")) ||
+            (todoList[todo].description.toLowerCase().includes(filterInputValue) && (filterInputValue != "")) ||
+            ((new Date(todoList[todo].dueDate) >= new Date(dateFromValue)) && (new Date(todoList[todo].dueDate) <= new Date(dateToValue)))) {
+                let row = makeNewTableRow(todoList[todo]).appendTo(todoListTable);
+                let newDeleteButton = $("<input type='button' class='btn btn-danger' value='X')></input>").click(function () {
+                    deleteTodo(todo);
+                });
+                newDeleteButton.appendTo(row);
         }
-        let row = makeNewTableRow(todoList[todo]).appendTo(todoListTable);
-        let newDeleteButton = $("<input type='button' class='btn btn-danger' value='X')></input>").click(function () {
-            deleteTodo(todo);
-        });
-        newDeleteButton.appendTo(row);
     }
 }
 
