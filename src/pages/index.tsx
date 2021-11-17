@@ -1,7 +1,9 @@
+import ProductsGrid from "../components/ProductsGrid"
+
 const Index = () => (
-   <>
-      <div>Hello World</div>
-   </>
+
+   <ProductsGrid />
+
 )
 
 export default Index
