@@ -1,6 +1,6 @@
 import { SimpleGrid } from "@chakra-ui/react"
+import Card from "./DeckBuilder/Card"
 import ProductCard from "./ProductCard"
-import ProductModal from "./ProductModal"
 
 function ProductsGrid() {
     // const finalRef = React.useRef()
@@ -43,7 +43,7 @@ function ProductsGrid() {
         <SimpleGrid columns={4} spacing={2}>
             
             {products.map(product => 
-                    <ProductCard 
+                    <Card 
                         key={product.id}
                         name={product.name}
                         description={product.description}

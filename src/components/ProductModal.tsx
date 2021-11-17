@@ -7,35 +7,46 @@ import {
     ModalBody,
     ModalCloseButton,
     Button,
-    Lorem,
-    useDisclosure 
+    useDisclosure,
+	Box
   } from "@chakra-ui/react"
 
-function ProductModal() {
+  import { Product } from "../types/ProductType"
+
+function ProductModal(props: Product) {
+
+    const { name, description, unitPrice, unitWeight, categories } = props
     const { isOpen, onOpen, onClose } = useDisclosure()
     return (
-      <>
-        <Button onClick={onOpen} colorScheme="gray.900" variant="outline">
-                        See more    
-        </Button>
-        <Modal isOpen={isOpen} onClose={onClose}>
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>Modal Title</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-              <Lorem count={2} />
-            </ModalBody>
-  
-            <ModalFooter>
-              <Button colorScheme="blue" mr={3} onClick={onClose}>
-                Close
-              </Button>
-              <Button variant="ghost">Secondary Action</Button>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
-      </>
+    	<>
+        	<Button onClick={onOpen} colorScheme="gray.900" variant="outline">
+        		See more    
+        	</Button>
+        	<Modal 
+				isOpen={isOpen} 
+				onClose={onClose} 
+				isCentered motionPreset="slideInBottom"
+        	>
+				<ModalOverlay />
+				<ModalContent>
+					<ModalHeader>{name}</ModalHeader>
+					<ModalCloseButton />
+					<ModalBody>
+						<Box color="gray.500"> {unitPrice} </Box>
+						<Box color="gray.500"> {unitWeight} </Box>
+						<Box fontWeight="semibold"> {categories} </Box>
+						<Box fontWeight="semibold"> {description} </Box>
+					</ModalBody>
+		
+					<ModalFooter>
+						<Button colorScheme="blue" mr={3} onClick={onClose}>
+							Close
+						</Button>
+							<Button variant="ghost">Add to cart</Button>
+					</ModalFooter>
+				</ModalContent>
+        	</Modal>
+    	</>
     )
   }
 
