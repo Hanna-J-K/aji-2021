@@ -1,5 +1,6 @@
-import { Box, Image, Center, Text, Flex } from "@chakra-ui/react"
+import { Box, Image, Center, Text, Flex, Button } from "@chakra-ui/react"
 import { Product } from "../../types/ProductType"
+
 
 function Card(props: Product) {
 
@@ -17,9 +18,9 @@ function Card(props: Product) {
 
     return (
         <Box 
-            borderWidth="10px" 
+            borderWidth="12px" 
             borderRadius="xl"
-            borderColor="orange.600"
+            borderColor="#121212"
             maxW={420} 
             maxH={608} 
             overflow="hidden"
@@ -33,19 +34,21 @@ function Card(props: Product) {
                     minH={35}
                     minW={390}
                     maxW={390}
-                    borderRadius="2xl" 
+                    borderRadius="2xl"
                     bg="orange.300"
                     borderWidth="3px"
                     borderColor="orange.900"
                 >
-                    <Text 
-                        textAlign="left" 
-                        fontWeight="bold" 
-                        color="black"
-                        padding="2"
-                    >
-                        {name}
-                    </Text>
+                    <Box boxShadow="inset 0 5px 1px black" borderRadius="xl">
+                        <Text 
+                            textAlign="left" 
+                            fontWeight="bold" 
+                            color="black"
+                            padding="2"
+                        >
+                            {name}
+                        </Text>
+                    </Box>
                 </Box>
 
                 <Center >
@@ -54,6 +57,10 @@ function Card(props: Product) {
                         maxW="380px" 
                         borderWidth="3px"
                         borderColor="orange.900"
+                        borderBottom="none"
+                        borderTopRadius="sm"
+                        borderTopWidth="5px"
+                        mt={-1}
                     >
                         <Image src={productImage.imageUrl} alt={productImage.imageAlt}/>
                     </Box>
@@ -65,43 +72,52 @@ function Card(props: Product) {
                     minH={35}
                     minW={390}
                     maxW={390}
-                    borderRadius="2xl" 
+                    borderRadius="3xl" 
                     bg="orange.300"
-                    borderWidth="3px"
+                    borderWidth="7px"
                     borderColor="orange.900"
-                    boxShadow="0 5px 5px 5px #000000;"
+                    borderBottomRadius="3xl"
+                    mb={-1}
+                    mt={-3}
                 >
-                    <Text 
-                        textAlign="left" 
-                        fontWeight="bold" 
-                        color="black"
-                        padding="2"
-                    >
-                        Price: {unitPrice}
-                    </Text>
+                    <Flex justify="space-between" grow={2} boxShadow="0 7px 5px 2px #281207" borderRadius="2xl">
+                        <Text 
+                            textAlign="left" 
+                            fontWeight="bold" 
+                            color="black"
+                            padding="2"
+                        >
+                            Price: {unitPrice}
+                        </Text>
 
-                    <Text 
-                        textAlign="left" 
-                        fontWeight="bold" 
-                        color="black"
-                        padding="2"
-                    >
-                        Weight: {unitWeight}
-                    </Text>
+                        <Text 
+                            textAlign="left" 
+                            fontWeight="bold" 
+                            color="black"
+                            padding="2"
+                        >
+                            Weight: {unitWeight}
+                        </Text>
+                    
+                    </Flex>
                     
                 </Flex>
 
                 <Center>
                     <Box 
-                        maxH={300}
                         minH={275}
                         w="380px" 
                         borderWidth="4px"
-                        borderTopWidth="2px"
+                        borderRadius="lg"
                         borderColor="orange.900"
                         bg="rgba(42, 67, 101, 0.5)"
                         marginBottom="2"
-                        borderRadius="md"
+                        borderTopColor="#281207"
+                        borderTopWidth="6px"
+                        mt={-1}
+                        pt={1}
+                        boxShadow="inset -2px -2px 7px 2px #281207"
+                        
                     >
                         <Text 
                             fontSize='2em' 
@@ -112,7 +128,13 @@ function Card(props: Product) {
                         >
                             {categories}
                         </Text>
+
+                        
+                        <Button>
+                            See more
+                        </Button>
                     </Box>
+
                 </Center>
             
             </Flex>
