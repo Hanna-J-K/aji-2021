@@ -1,12 +1,11 @@
-import { Box, Image, Center, Text, Flex, Button, useDisclosure } from "@chakra-ui/react"
+import { Box, Image, Center, Text, Flex } from "@chakra-ui/react"
 import { Product } from "../../types/ProductType"
-import ProductModal from "../ProductModal"
+import ProductModal from "./ProductModal"
 
 
 function Card(props: Product) {
 
     const { name, description, unitPrice, unitWeight, categories } = props
-    const { isOpen, onOpen, onClose } = useDisclosure()
 
     const backgroundImage = {
         imageUrl: "https://images.unsplash.com/photo-1610296669228-602fa827fc1f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1075&q=80",
