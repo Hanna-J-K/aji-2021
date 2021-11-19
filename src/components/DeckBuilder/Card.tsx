@@ -1,10 +1,12 @@
-import { Box, Image, Center, Text, Flex, Button } from "@chakra-ui/react"
+import { Box, Image, Center, Text, Flex, Button, useDisclosure } from "@chakra-ui/react"
 import { Product } from "../../types/ProductType"
+import ProductModal from "../ProductModal"
 
 
 function Card(props: Product) {
 
     const { name, description, unitPrice, unitWeight, categories } = props
+    const { isOpen, onOpen, onClose } = useDisclosure()
 
     const backgroundImage = {
         imageUrl: "https://images.unsplash.com/photo-1610296669228-602fa827fc1f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1075&q=80",
@@ -35,9 +37,9 @@ function Card(props: Product) {
                     minW={390}
                     maxW={390}
                     borderRadius="2xl"
-                    bg="orange.300"
+                    bg="pink.300"
                     borderWidth="3px"
-                    borderColor="orange.900"
+                    borderColor="pink.800"
                 >
                     <Box boxShadow="inset 0 5px 1px black" borderRadius="xl">
                         <Text 
@@ -56,7 +58,7 @@ function Card(props: Product) {
                         maxH="200px" 
                         maxW="380px" 
                         borderWidth="3px"
-                        borderColor="orange.900"
+                        borderColor="pink.800"
                         borderBottom="none"
                         borderTopRadius="sm"
                         borderTopWidth="5px"
@@ -73,9 +75,9 @@ function Card(props: Product) {
                     minW={390}
                     maxW={390}
                     borderRadius="3xl" 
-                    bg="orange.300"
+                    bg="pink.300"
                     borderWidth="7px"
-                    borderColor="orange.900"
+                    borderColor="pink.800"
                     borderBottomRadius="3xl"
                     mb={-1}
                     mt={-3}
@@ -109,7 +111,7 @@ function Card(props: Product) {
                         w="380px" 
                         borderWidth="4px"
                         borderRadius="lg"
-                        borderColor="orange.900"
+                        borderColor="pink.800"
                         bg="rgba(42, 67, 101, 0.5)"
                         marginBottom="2"
                         borderTopColor="#281207"
@@ -128,12 +130,19 @@ function Card(props: Product) {
                         >
                             {categories}
                         </Text>
-
+                        <Center mt={6}>
+                            <ProductModal 
+                                name={name} 
+                                description={description} 
+                                unitPrice={unitPrice} 
+                                unitWeight={unitWeight} 
+                                categories={categories} 
+                            />
+                        </Center>
                         
-                        <Button>
-                            See more
-                        </Button>
+                        
                     </Box>
+                    
 
                 </Center>
             
