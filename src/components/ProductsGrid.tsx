@@ -1,6 +1,5 @@
 import { SimpleGrid } from "@chakra-ui/react"
 import Card from "./DeckBuilder/Card"
-import ProductCard from "./ProductCard"
 
 function ProductsGrid() {
     // const finalRef = React.useRef()
