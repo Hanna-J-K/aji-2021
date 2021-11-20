@@ -1,0 +1,7 @@
+fragment DefaultProduct on Product {
+   id
+   name
+   description
+   unitPrice
+   unitWeight
+}

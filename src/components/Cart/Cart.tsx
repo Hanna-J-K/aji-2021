@@ -24,6 +24,8 @@ interface CartProps {}
 
 export const Cart: React.FC<CartProps> = () => {
    const [cartItems, setCartItems] = useState([] as CartItemType[])
+   const { isOpen, onOpen, onClose } = useDisclosure()
+   const shopBtnRef = React.useRef()
    const getTotalItems = (items: CartItemType[]) =>
       items.reduce(
          (accumulateTotal: number, item) => accumulateTotal + item.quantity,
@@ -57,8 +59,7 @@ export const Cart: React.FC<CartProps> = () => {
          }, [] as CartItemType[])
       )
    }
-   const shopBtnRef = React.useRef()
-   const { isOpen, onOpen, onClose } = useDisclosure()
+
    const calculateTotal = (items: CartItemType[]) => {
       items.reduce(
          (accumulateTotal: number, item: CartItemType) =>
