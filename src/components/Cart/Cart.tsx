@@ -13,6 +13,7 @@ import {
    Icon,
    Text,
    Badge,
+   Center,
    Flex,
    Heading,
 } from '@chakra-ui/react'
@@ -68,15 +69,31 @@ export const Cart: React.FC<CartProps> = () => {
    }
    return (
       <>
-         <Flex>
-            <IconButton
-               ref={shopBtnRef.current}
-               aria-label="show cart"
-               icon={<Icon as={BiCartAlt} onClick={onOpen} />}
-            ></IconButton>
-            <Badge variant="solid" colorScheme="green">
-               {getTotalItems(cartItems)}
-            </Badge>
+         <Flex mt={5} mb={7}>
+            <Center
+               variant="solid"
+               bg="pink.300"
+               color="black"
+               boxShadow="0 5px 5px 1px #521B41"
+               borderRadius="lg"
+            >
+               <IconButton
+                  bg="pink.300"
+                  ml={2}
+                  borderColor="pink.700"
+                  borderWidth="3px"
+                  _hover={{ bg: "purple.300" }}
+                  _active={{
+                     bg: "purple.300",
+                     borderColor: "purple.700",
+                  }} 
+                  ref={shopBtnRef.current}
+                  aria-label="show cart"
+                  icon={<Icon as={BiCartAlt} onClick={onOpen} />}
+               ></IconButton>
+               <Badge mr={2} bg="pink.700" color="white"> {getTotalItems(cartItems)} </Badge>
+            </Center>
+            
          </Flex>
 
          <Drawer

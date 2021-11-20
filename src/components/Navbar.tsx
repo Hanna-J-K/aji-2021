@@ -1,6 +1,6 @@
 import { Box, Center, Flex, Heading  } from "@chakra-ui/layout";
 import { Button } from "@chakra-ui/react"
-import CartDrawer from "../components/CartDrawer"
+import { Cart } from "../components/Cart/Cart"
 
 function Navbar() {
 
@@ -13,14 +13,16 @@ function Navbar() {
             w="100%" 
             h="10vh"
             borderRadius="lg"
+            borderTopRadius="none"
             justify="space-between"
+            boxShadow="0 5px 5px 3px black"
         >
             <Box m={5} ml={10} color="white">
                 <Heading>Ollie-wand-er</Heading>
             </Box>
 
-            <Box>
-                <CartDrawer />
+            <Flex>
+                <Cart />
 
                 <Button 
                         variant="solid"
@@ -38,7 +40,7 @@ function Navbar() {
                     >
                         Log In   
                 </Button>
-            </Box>
+            </Flex>
             
                 
         </Flex>
