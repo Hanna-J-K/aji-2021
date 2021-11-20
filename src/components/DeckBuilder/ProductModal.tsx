@@ -15,7 +15,7 @@ import {
 	Text
   } from "@chakra-ui/react"
 
-  import { Product } from "../types/ProductType"
+  import { Product } from "../../types/ProductType"
 
 function ProductModal(props: Product) {
 
@@ -63,7 +63,7 @@ function ProductModal(props: Product) {
 					boxShadow="inset 0 0 10px 5px black" 
 					borderRadius="xl"
 					bg="rgba(42, 67, 101, 0.98)"
-					bgGradient="linear(to-tr, pink.800, blue.800, orange.800)"
+					bgGradient="linear(to-tr, pink.800, orange.900, blue.800)"
 				>
 					<Flex direction="column" >
 						<ModalHeader color="white" borderBottomRadius="2xl" boxShadow="inset 0 0 3px 1px #000000">
