@@ -25,18 +25,9 @@ function Navbar() {
                 <Cart />
 
                 <Button 
-                        variant="solid"
-                        bg="pink.300"
-                        color="black"
-                        boxShadow="0 5px 5px 1px #521B41"
-                        borderRadius="lg"
+                        variant="magic-navbar"
                         m={5}
                         mr={10}
-                        _hover={{ bg: "purple.300" }}
-                        _active={{
-                            bg: "purple.300",
-                            borderColor: "purple.700",
-                        }}
                     >
                         Log In   
                 </Button>

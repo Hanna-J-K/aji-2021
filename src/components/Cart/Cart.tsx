@@ -73,26 +73,24 @@ export const Cart: React.FC<CartProps> = () => {
          <Flex mt={5} mb={7}>
             <Center
                variant="solid"
-               bg="pink.300"
+               bg="blue.200"
                color="black"
                boxShadow="0 5px 5px 1px #521B41"
                borderRadius="lg"
+               borderColor="blue.200"
+               borderRightWidth="10px"
+               h="42px"
             >
                <IconButton
-                  bg="pink.300"
+                  variant="magic-navbar"
+                  boxShadow="none"
                   ml={2}
-                  borderColor="pink.700"
-                  borderWidth="3px"
-                  _hover={{ bg: "purple.300" }}
-                  _active={{
-                     bg: "purple.300",
-                     borderColor: "purple.700",
-                  }} 
+                  w="50px"
                   ref={shopBtnRef.current}
                   aria-label="show cart"
                   icon={<Icon as={BiCartAlt} onClick={onOpen} />}
                ></IconButton>
-               <Badge mr={2} bg="pink.700" color="white"> {getTotalItems(cartItems)} </Badge>
+               <Badge bg="pink.700" color="white"> {getTotalItems(cartItems)} </Badge>
             </Center>
             
          </Flex>
@@ -102,6 +100,7 @@ export const Cart: React.FC<CartProps> = () => {
             placement="right"
             onClose={onClose}
             finalFocusRef={shopBtnRef.current}
+            size="md"
          >
             <DrawerOverlay />
             <DrawerContent>
@@ -129,8 +128,8 @@ export const Cart: React.FC<CartProps> = () => {
                </DrawerBody>
 
                <DrawerFooter>
-                  <Button variant="outline" mr={3} onClick={onClose}>
-                     Checkout
+                  <Button variant="magic" mr={3} onClick={onClose}>
+                     Place Order
                   </Button>
                </DrawerFooter>
             </DrawerContent>

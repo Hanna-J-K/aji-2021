@@ -36,6 +36,30 @@ const theme = extendTheme({
          viewBox: '0 0 3000 3163',
       },
    },
+
+   components: {
+      Button: {
+         variants: {
+            "magic": {
+               bg: "pink.300",
+               color: "black",
+               borderRadius: "lg",
+               boxShadow: "0 5px 5px 1px #521B41",
+               _hover: { bg: "purple.300" },
+               _active: { bg: "purple.300", borderColor: "purple.700"}
+            },
+
+            "magic-navbar": {
+               bg: "blue.200",
+               color: "black",
+               borderRadius: "lg",
+               boxShadow: "0 5px 5px 1px #521B41",
+               _hover: { bg: "purple.300" },
+               _active: { bg: "purple.300", borderColor: "purple.700"}
+            },
+         },
+      },
+   },
 })
 
 export default theme

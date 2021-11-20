@@ -35,16 +35,7 @@ function ProductModal(props: Product) {
 			>
 				<Button 
 					onClick={onOpen} 
-					variant="solid"
-					bg="pink.300"
-					color="black"
-					boxShadow="0 5px 5px 1px #521B41"
-					borderRadius="lg"
-					_hover={{ bg: "purple.300" }}
-					_active={{
-						bg: "purple.300",
-						borderColor: "purple.700",
-					  }}
+					variant="magic"
 				>
 					See more    
 				</Button>
@@ -70,18 +61,8 @@ function ProductModal(props: Product) {
 							{name}
 						</ModalHeader>
 						<ModalCloseButton 
-							variant="solid"
-							bg="pink.300"
-							color="pink.900"
-							borderWidth="2px"
-							boxShadow="0 3px 5px 1px #521B41"
-							borderColor="pink.900"
-							borderRadius="lg"
-							_hover={{ bg: "purple.300" }}
-							_active={{
-								bg: "purple.300",
-								borderColor: "purple.700",
-							  }}
+							variant="magic"
+							color="white"	
 						/>
 						<ModalBody>
 							<Center mb={3}>
@@ -110,16 +91,8 @@ function ProductModal(props: Product) {
 							>
 								<Button 
 									onClick={onClose}
-									variant="solid"
+									variant="magic"
 									bg="pink.400"
-									color="black"
-									boxShadow="0 5px 5px 1px #521B41"
-									borderRadius="lg"
-									_hover={{ bg: "purple.300" }}
-									_active={{
-										bg: "purple.300",
-										borderColor: "purple.700",
-									}}
 								>
 									Close    
 								</Button>
@@ -132,16 +105,9 @@ function ProductModal(props: Product) {
 								bg="pink.300"
 							>
 								<Button 
-									variant="ghost"
+									variant="magic"
 									bg="pink.200"
 									color="black"
-									boxShadow="0 5px 5px 1px #521B41"
-									borderRadius="lg"
-									_hover={{ bg: "purple.300" }}
-									_active={{
-										bg: "purple.300",
-										borderColor: "purple.700",
-									}}
 								>
 									Add to cart   
 								</Button>
