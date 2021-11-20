@@ -1,13 +1,10 @@
 import ProductsGrid from '../components/ProductsGrid'
 import React from 'react'
-<<<<<<< HEAD
 import Navbar from '../components/Navbar'
-=======
 import { Cart } from '../components/Cart/Cart'
 import { useProductsQuery } from '../generated/graphql'
 import { Box, Flex, Stack, Text } from '@chakra-ui/react'
 import { withApollo } from '../utils/withApollo'
->>>>>>> 6dd82e181238c30425e9497ea4dbca63986943d0
 
 const Index = () => {
    const { data, error, loading } = useProductsQuery()
@@ -22,9 +19,7 @@ const Index = () => {
 
    return (
       <>
-<<<<<<< HEAD
          <Navbar />
-=======
          <Stack direction="row" wrap="wrap" spacing={8}>
             {data?.products.map((p) =>
                !p ? null : (
@@ -35,7 +30,6 @@ const Index = () => {
             )}
          </Stack>
          <Cart />
->>>>>>> 6dd82e181238c30425e9497ea4dbca63986943d0
          <ProductsGrid />
       </>
    )
