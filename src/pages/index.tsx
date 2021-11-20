@@ -20,7 +20,7 @@ const Index = () => {
    return (
       <>
          <Navbar />
-         <Stack direction="row" wrap="wrap" spacing={8}>
+         {/* <Stack direction="row" wrap="wrap" spacing={8}>
             {data?.products.map((p) =>
                !p ? null : (
                   <Flex direction="row" key={p.id} p={3} shadow="md" borderWidth="1px">
@@ -28,8 +28,8 @@ const Index = () => {
                   </Flex>
                )
             )}
-         </Stack>
-         <Cart />
+         </Stack> */}
+         {/* <Cart /> */}
          <ProductsGrid />
       </>
    )
