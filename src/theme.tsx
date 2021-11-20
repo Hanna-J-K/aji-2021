@@ -59,7 +59,16 @@ const theme = extendTheme({
             },
          },
       },
+      MenuList: {
+         baseStyle: {
+            bg: "blue.500",
+            color: "black",
+            _hover: { bg: "pink.500"}
+         }
+         
+         },
+      },
    },
-})
+)
 
 export default theme

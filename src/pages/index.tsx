@@ -3,6 +3,7 @@ import React from 'react'
 import Navbar from '../components/Navbar'
 import { useProductsQuery } from '../generated/graphql'
 import { withApollo } from '../utils/withApollo'
+import OrdersTable from '../components/Orders/OrdersTable'
 
 const Index = () => {
    const { data, error, loading } = useProductsQuery()
@@ -18,7 +19,9 @@ const Index = () => {
    return (
       <>
          <Navbar />
+         <OrdersTable />
          <ProductsGrid />
+         
       </>
    )
 }
