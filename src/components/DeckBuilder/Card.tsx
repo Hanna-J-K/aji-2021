@@ -139,6 +139,7 @@ export const Card: React.FC<CardProps> = ({ product }) => {
                   <Center mt={6}>
                      <ProductModal product={product} />
                   </Center>
+                  xd
                </Box>
             </Center>
          </Flex>
