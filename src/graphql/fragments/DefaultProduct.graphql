@@ -4,4 +4,7 @@ fragment DefaultProduct on Product {
    description
    unitPrice
    unitWeight
+   categories {
+      name
+   }
 }

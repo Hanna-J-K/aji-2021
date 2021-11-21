@@ -97,6 +97,12 @@ export type OrderStatus = {
   orderStatus: Scalars['String'];
 };
 
+export type PaginatedProducts = {
+  __typename?: 'PaginatedProducts';
+  hasMore: Scalars['Boolean'];
+  products: Array<Product>;
+};
+
 export type Product = {
   __typename?: 'Product';
   categories: Array<Category>;
@@ -129,7 +135,7 @@ export type Query = {
   ordersByStatus?: Maybe<Array<Order>>;
   orderStatuses: Array<OrderStatus>;
   product?: Maybe<Product>;
-  products: Array<Product>;
+  products: PaginatedProducts;
   userOrders?: Maybe<Array<Order>>;
 };
 
@@ -149,13 +155,19 @@ export type QueryProductArgs = {
 };
 
 
+export type QueryProductsArgs = {
+  cursor?: InputMaybe<Scalars['Int']>;
+  limit: Scalars['Int'];
+};
+
+
 export type QueryUserOrdersArgs = {
   username: Scalars['String'];
 };
 
 export type DefaultErrorFragment = { __typename?: 'FieldError', field: string, message: Array<string> };
 
-export type DefaultProductFragment = { __typename?: 'Product', id: number, name: string, description: string, unitPrice: number, unitWeight: number };
+export type DefaultProductFragment = { __typename?: 'Product', id: number, name: string, description: string, unitPrice: number, unitWeight: number, categories: Array<{ __typename?: 'Category', name: string }> };
 
 export type CreateProductMutationVariables = Exact<{
   input: ProductInput;
@@ -164,10 +176,13 @@ export type CreateProductMutationVariables = Exact<{
 
 export type CreateProductMutation = { __typename?: 'Mutation', createProduct: { __typename?: 'ProductResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: Array<string> }> | null | undefined, product?: { __typename?: 'Product', id: number, name: string, description: string, unitPrice: number, unitWeight: number } | null | undefined } };
 
-export type ProductsQueryVariables = Exact<{ [key: string]: never; }>;
+export type ProductsQueryVariables = Exact<{
+  limit: Scalars['Int'];
+  cursor?: InputMaybe<Scalars['Int']>;
+}>;
 
 
-export type ProductsQuery = { __typename?: 'Query', products: Array<{ __typename?: 'Product', id: number, name: string, description: string, unitPrice: number, unitWeight: number }> };
+export type ProductsQuery = { __typename?: 'Query', products: { __typename?: 'PaginatedProducts', hasMore: boolean, products: Array<{ __typename?: 'Product', id: number, name: string, description: string, unitPrice: number, unitWeight: number, categories: Array<{ __typename?: 'Category', name: string }> }> } };
 
 export const DefaultErrorFragmentDoc = gql`
     fragment DefaultError on FieldError {
@@ -182,6 +197,9 @@ export const DefaultProductFragmentDoc = gql`
   description
   unitPrice
   unitWeight
+  categories {
+    name
+  }
 }
     `;
 export const CreateProductDocument = gql`
@@ -227,9 +245,12 @@ export type CreateProductMutationHookResult = ReturnType<typeof useCreateProduct
 export type CreateProductMutationResult = Apollo.MutationResult<CreateProductMutation>;
 export type CreateProductMutationOptions = Apollo.BaseMutationOptions<CreateProductMutation, CreateProductMutationVariables>;
 export const ProductsDocument = gql`
-    query Products {
-  products {
-    ...DefaultProduct
+    query Products($limit: Int!, $cursor: Int) {
+  products(limit: $limit, cursor: $cursor) {
+    products {
+      ...DefaultProduct
+    }
+    hasMore
   }
 }
     ${DefaultProductFragmentDoc}`;
@@ -246,10 +267,12 @@ export const ProductsDocument = gql`
  * @example
  * const { data, loading, error } = useProductsQuery({
  *   variables: {
+ *      limit: // value for 'limit'
+ *      cursor: // value for 'cursor'
  *   },
  * });
  */
-export function useProductsQuery(baseOptions?: Apollo.QueryHookOptions<ProductsQuery, ProductsQueryVariables>) {
+export function useProductsQuery(baseOptions: Apollo.QueryHookOptions<ProductsQuery, ProductsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<ProductsQuery, ProductsQueryVariables>(ProductsDocument, options);
       }

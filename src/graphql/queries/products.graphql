@@ -1,5 +1,8 @@
-query Products {
-   products {
-      ...DefaultProduct
+query Products($limit: Int!, $cursor: Int) {
+   products(limit: $limit, cursor: $cursor) {
+      products {
+         ...DefaultProduct
+      }
+      hasMore
    }
 }
