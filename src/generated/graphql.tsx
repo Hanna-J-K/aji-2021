@@ -156,8 +156,9 @@ export type QueryProductArgs = {
 
 
 export type QueryProductsArgs = {
-  cursor?: InputMaybe<Scalars['Int']>;
+  cursor: Scalars['Int'];
   limit: Scalars['Int'];
+  phrase?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -183,7 +184,8 @@ export type CategoryQuery = { __typename?: 'Query', category: Array<{ __typename
 
 export type ProductsQueryVariables = Exact<{
   limit: Scalars['Int'];
-  cursor?: InputMaybe<Scalars['Int']>;
+  cursor: Scalars['Int'];
+  phrase?: InputMaybe<Scalars['String']>;
 }>;
 
 
@@ -284,8 +286,8 @@ export type CategoryQueryHookResult = ReturnType<typeof useCategoryQuery>;
 export type CategoryLazyQueryHookResult = ReturnType<typeof useCategoryLazyQuery>;
 export type CategoryQueryResult = Apollo.QueryResult<CategoryQuery, CategoryQueryVariables>;
 export const ProductsDocument = gql`
-    query Products($limit: Int!, $cursor: Int) {
-  products(limit: $limit, cursor: $cursor) {
+    query Products($limit: Int!, $cursor: Int!, $phrase: String) {
+  products(limit: $limit, cursor: $cursor, phrase: $phrase) {
     products {
       ...DefaultProduct
     }
@@ -308,6 +310,7 @@ export const ProductsDocument = gql`
  *   variables: {
  *      limit: // value for 'limit'
  *      cursor: // value for 'cursor'
+ *      phrase: // value for 'phrase'
  *   },
  * });
  */

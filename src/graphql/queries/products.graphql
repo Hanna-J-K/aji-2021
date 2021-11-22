@@ -1,5 +1,5 @@
-query Products($limit: Int!, $cursor: Int) {
-   products(limit: $limit, cursor: $cursor) {
+query Products($limit: Int!, $cursor: Int!, $phrase: String) {
+   products(limit: $limit, cursor: $cursor, phrase: $phrase) {
       products {
          ...DefaultProduct
       }
