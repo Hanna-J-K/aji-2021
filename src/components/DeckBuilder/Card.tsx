@@ -1,14 +1,16 @@
-import { Box, Image, Center, Text, Flex } from '@chakra-ui/react'
+import { Box, Image, Center, Text, Flex, Button } from '@chakra-ui/react'
+import React from 'react'
+import { CartItemType } from '../../types/CartItemType'
 import { Product } from '../../types/ProductType'
 import ProductModal from './ProductModal'
 
 interface CardProps {
    product: Product
+   addToCart: (clickedItem: CartItemType) => void
 }
 
-export const Card: React.FC<CardProps> = ({ product }) => {
+export const Card: React.FC<CardProps> = ({ product, addToCart }) => {
    const { name, unitPrice, unitWeight, categories } = product
-
    const backgroundImage = {
       imageUrl:
          'https://images.unsplash.com/photo-1610296669228-602fa827fc1f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1075&q=80',
@@ -139,7 +141,29 @@ export const Card: React.FC<CardProps> = ({ product }) => {
                   <Center mt={6}>
                      <ProductModal product={product} />
                   </Center>
-                  xd
+                  <Box
+                     borderWidth="5px"
+                     borderColor="pink.800"
+                     borderRadius="xl"
+                     bg="pink.300"
+                  >
+                     <Button
+                        onClick={() => {
+                           addToCart({
+                              id: product.id,
+                              name: product.name,
+                              unitPrice: product.unitPrice,
+                              quantity: 1,
+                              image: 'elo',
+                           })
+                        }}
+                        variant="magic"
+                        bg="pink.200"
+                        color="black"
+                     >
+                        Add to cart
+                     </Button>
+                  </Box>
                </Box>
             </Center>
          </Flex>

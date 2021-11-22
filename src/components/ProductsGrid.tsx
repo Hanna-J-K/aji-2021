@@ -1,9 +1,27 @@
 import { SimpleGrid, Button, Flex, Container } from '@chakra-ui/react'
 import Card from './DeckBuilder/Card'
 import { useProductsQuery } from '../generated/graphql'
-import React from 'react'
+import React, { useContext } from 'react'
+import CartContext from '../contexts/CartContext'
+import { CartItemType } from '../types/CartItemType'
 
 const ProductsGrid = () => {
+   const [cartItems, setCartItems] = useContext(CartContext)
+   const handleAddToCart = (clickedItem: CartItemType) => {
+      setCartItems((cart) => {
+         const isItemInCart = cart.find((item) => item.id === clickedItem.id)
+
+         if (isItemInCart) {
+            return cart.map((item) =>
+               item.id === clickedItem.id
+                  ? { ...item, quantity: item.quantity + 1 }
+                  : item
+            )
+         }
+         return [...cart, { ...clickedItem, amount: 1 }]
+      })
+   }
+
    const { data, error, loading, fetchMore, variables } = useProductsQuery({
       variables: {
          limit: 12,
@@ -11,7 +29,6 @@ const ProductsGrid = () => {
       },
       notifyOnNetworkStatusChange: true,
    })
-   console.log(data)
    if (!loading && !data) {
       return (
          <div>
@@ -25,7 +42,13 @@ const ProductsGrid = () => {
       <Container maxW="none">
          <SimpleGrid columns={4} spacing={2}>
             {data?.products.products.map((product) =>
-               !product ? null : <Card key={product.id} product={product} />
+               !product ? null : (
+                  <Card
+                     key={product.id}
+                     product={product}
+                     addToCart={handleAddToCart}
+                  />
+               )
             )}
          </SimpleGrid>
          {data && data?.products.hasMore ? (

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext } from 'react'
 import {
    Drawer,
    DrawerBody,
@@ -20,11 +20,12 @@ import {
 import { CartItemType } from '../../types/CartItemType'
 import { CartItem } from './CartItem'
 import { BiCartAlt } from '@react-icons/all-files/bi/BiCartAlt'
+import CartContext from '../../contexts/CartContext'
 
 interface CartProps {}
 
 export const Cart: React.FC<CartProps> = () => {
-   const [cartItems, setCartItems] = useState([] as CartItemType[])
+   const [cartItems, setCartItems] = useContext(CartContext)
    const { isOpen, onOpen, onClose } = useDisclosure()
    const shopBtnRef = React.useRef()
    const getTotalItems = (items: CartItemType[]) =>
@@ -40,7 +41,7 @@ export const Cart: React.FC<CartProps> = () => {
          if (isItemInCart) {
             return cart.map((item) =>
                item.id === clickedItem.id
-                  ? { ...item, amount: item.quantity + 1 }
+                  ? { ...item, quantity: item.quantity + 1 }
                   : item
             )
          }
@@ -53,7 +54,7 @@ export const Cart: React.FC<CartProps> = () => {
          cart.reduce((ack, item) => {
             if (item.id === id) {
                if (item.quantity === 1) return ack
-               return [...ack, { ...item, amount: item.quantity - 1 }]
+               return [...ack, { ...item, quantity: item.quantity - 1 }]
             } else {
                return [...ack, item]
             }
@@ -62,12 +63,13 @@ export const Cart: React.FC<CartProps> = () => {
    }
 
    const calculateTotal = (items: CartItemType[]) => {
-      items.reduce(
+      return items.reduce(
          (accumulateTotal: number, item: CartItemType) =>
             accumulateTotal + item.quantity * item.unitPrice,
          0
       )
    }
+
    return (
       <>
          <Flex mt={5} mb={7}>
@@ -90,9 +92,11 @@ export const Cart: React.FC<CartProps> = () => {
                   aria-label="show cart"
                   icon={<Icon as={BiCartAlt} onClick={onOpen} />}
                ></IconButton>
-               <Badge bg="pink.700" color="white"> {getTotalItems(cartItems)} </Badge>
+               <Badge bg="pink.700" color="white">
+                  {' '}
+                  {getTotalItems(cartItems)}{' '}
+               </Badge>
             </Center>
-            
          </Flex>
 
          <Drawer
@@ -122,7 +126,7 @@ export const Cart: React.FC<CartProps> = () => {
                   ))}
                   {cartItems.length === 0 ? null : (
                      <Heading mt="3" as="h2" size="md">
-                        Total: ${calculateTotal(cartItems)}
+                        Total: ${calculateTotal(cartItems).toFixed(2)}
                      </Heading>
                   )}
                </DrawerBody>

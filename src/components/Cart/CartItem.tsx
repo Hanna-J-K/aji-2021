@@ -13,7 +13,7 @@ export const CartItem: React.FC<CartItemProps> = ({
    addToCart,
    removeFromCart,
 }) => (
-   <Container>
+   <Container color="white">
       <div>
          <h3>{item.name}</h3>
          <div>
@@ -40,6 +40,6 @@ export const CartItem: React.FC<CartItemProps> = ({
             </Button>
          </div>
       </div>
-      <img src={item.image} alt={item.name} />
+      <img src={item.image} alt={''} />
    </Container>
 )

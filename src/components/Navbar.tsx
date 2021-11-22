@@ -1,5 +1,6 @@
 import { Box, Flex, Heading } from '@chakra-ui/layout'
 import { Button } from '@chakra-ui/react'
+import React from 'react'
 import { Cart } from '../components/Cart/Cart'
 
 export const Navbar = () => {
@@ -19,8 +20,7 @@ export const Navbar = () => {
          </Box>
 
          <Flex>
-            <Cart />
-
+               <Cart />
             <Button variant="magic-navbar" m={5} mr={10}>
                Log In
             </Button>
