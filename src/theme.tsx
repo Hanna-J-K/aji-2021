@@ -1,7 +1,8 @@
 import { extendTheme } from '@chakra-ui/react'
 import { createBreakpoints } from '@chakra-ui/theme-tools'
+// import '@fontsource/cinzel/400.css'
 
-const fonts = { mono: `'Menlo', monospace` }
+// const fonts = { mono: `'Menlo', monospace` }
 
 const breakpoints = createBreakpoints({
    sm: '40em',
@@ -11,11 +12,22 @@ const breakpoints = createBreakpoints({
 })
 
 const theme = extendTheme({
-   colors: {
-      black: '#16161D',
+   styles: {
+      global: {
+         'html, body': {
+            bg: 'teal.900',
+            backgroundImage:
+               "url('https://images.unsplash.com/photo-1530362502708-d02c8f093039?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80')",
+            color: 'white',
+         },
+      },
    },
-   fonts,
+
    breakpoints,
+   fonts: {
+      heading: 'Cinzel',
+      body: 'Raleway',
+   },
    icons: {
       logo: {
          path: (
@@ -40,35 +52,41 @@ const theme = extendTheme({
    components: {
       Button: {
          variants: {
-            "magic": {
-               bg: "pink.300",
-               color: "black",
-               borderRadius: "lg",
-               boxShadow: "0 5px 5px 1px #521B41",
-               _hover: { bg: "purple.300" },
-               _active: { bg: "purple.300", borderColor: "purple.700"}
+            magic: {
+               bg: 'pink.300',
+               color: 'white',
+               borderRadius: 'lg',
+               textShadow: '1px 1px 2px black',
+               fontWeight: '300',
+               boxShadow: '0 5px 5px 1px #521B41',
+               _hover: { bg: 'purple.300' },
+               _active: { bg: 'purple.300', borderColor: 'purple.700' },
             },
 
-            "magic-navbar": {
-               bg: "blue.200",
-               color: "black",
-               borderRadius: "lg",
-               boxShadow: "0 5px 5px 1px #521B41",
-               _hover: { bg: "purple.300" },
-               _active: { bg: "purple.300", borderColor: "purple.700"}
+            'magic-navbar': {
+               bg: 'blue.200',
+               color: 'black',
+               borderRadius: 'lg',
+               boxShadow: '0 5px 5px 1px #521B41',
+               _hover: { bg: 'purple.300' },
+               _active: { bg: 'purple.300', borderColor: 'purple.700' },
             },
          },
       },
       MenuList: {
          baseStyle: {
-            bg: "blue.500",
-            color: "black",
-            _hover: { bg: "pink.500"}
-         }
-         
+            bg: 'blue.500',
+            color: 'black',
+            _hover: { bg: 'pink.500' },
+         },
+      },
+
+      Text: {
+         baseStyle: {
+            textShadow: '1px 2px 2px #521B41',
          },
       },
    },
-)
+})
 
 export default theme

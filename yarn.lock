@@ -1203,6 +1203,16 @@
     ts-node "^9"
     tslib "^2"
 
+"@fontsource/cinzel@^4.5.0":
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/@fontsource/cinzel/-/cinzel-4.5.0.tgz#3872b46721eb2637391247994daf5ecac1c43ab9"
+  integrity sha512-qtTzOwAM1A2sWV2rqXqnrdDf2lz/CTGhk4JGpfHNQw4X0uifCixdgrJiSiYvm5cHaiAU4O510GKuCx1H6TmZAQ==
+
+"@fontsource/comfortaa@^4.5.1":
+  version "4.5.1"
+  resolved "https://registry.yarnpkg.com/@fontsource/comfortaa/-/comfortaa-4.5.1.tgz#0d15aad457f54a1a8986d6a2b46e3eb02a75ec73"
+  integrity sha512-ZmkhXYlCcDLNK2G3W+uBA5FIRl+czS40JmiUZ7WwjlMj6qsuXJmn0oG/i2sFZuoDiNuGekAWdG/02cs5gIoCzw==
+
 "@fontsource/open-sans@^4.5.2":
   version "4.5.2"
   resolved "https://registry.yarnpkg.com/@fontsource/open-sans/-/open-sans-4.5.2.tgz#6953650035d5b42be645013b1465544d0af49d7d"

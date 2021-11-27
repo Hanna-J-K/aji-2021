@@ -5,6 +5,8 @@ import { withApollo } from '../utils/withApollo'
 import OrdersTable from '../components/Orders/OrdersTable'
 import { CartItemType } from '../types/CartItemType'
 import { CartProvider } from '../contexts/CartContext'
+import '@fontsource/cinzel/700.css'
+import '@fontsource/raleway/500.css'
 
 const Index = () => {
    const [cartItems, setCartItems] = React.useState<CartItemType[]>([])

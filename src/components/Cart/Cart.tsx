@@ -107,9 +107,9 @@ export const Cart: React.FC<CartProps> = () => {
             size="md"
          >
             <DrawerOverlay />
-            <DrawerContent>
+            <DrawerContent bg="gray.800" color="white">
                <DrawerCloseButton color="red" />
-               <DrawerHeader color="white">Shopping Cart</DrawerHeader>
+               <DrawerHeader>Shopping Cart</DrawerHeader>
                <DrawerBody>
                   {cartItems.length === 0 ? (
                      <Text textAlign="center" fontSize="24" fontWeight="bolder">

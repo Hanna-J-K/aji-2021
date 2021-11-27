@@ -26,7 +26,7 @@ export const Card: React.FC<CardProps> = ({ product, addToCart }) => {
       <Box
          borderWidth="12px"
          borderRadius="xl"
-         borderColor="#121212"
+         borderColor="gray.800"
          maxW={420}
          maxH={608}
          overflow="hidden"
@@ -34,7 +34,7 @@ export const Card: React.FC<CardProps> = ({ product, addToCart }) => {
       >
          <Flex direction="column" justify="center" align="center">
             <Box
-               marginTop="2"
+               mt={2}
                maxH={100}
                minH={35}
                minW={390}
@@ -45,12 +45,7 @@ export const Card: React.FC<CardProps> = ({ product, addToCart }) => {
                borderColor="pink.800"
             >
                <Box boxShadow="inset 0 5px 1px black" borderRadius="xl">
-                  <Text
-                     textAlign="left"
-                     fontWeight="bold"
-                     color="black"
-                     padding="2"
-                  >
+                  <Text textAlign="left" fontWeight="600" padding="2">
                      {name}
                   </Text>
                </Box>
@@ -94,21 +89,11 @@ export const Card: React.FC<CardProps> = ({ product, addToCart }) => {
                   boxShadow="0 7px 5px 2px #281207"
                   borderRadius="2xl"
                >
-                  <Text
-                     textAlign="left"
-                     fontWeight="bold"
-                     color="black"
-                     padding="2"
-                  >
+                  <Text textAlign="left" padding="2">
                      Price: {unitPrice}
                   </Text>
 
-                  <Text
-                     textAlign="left"
-                     fontWeight="bold"
-                     color="black"
-                     padding="2"
-                  >
+                  <Text textAlign="left" padding="2">
                      Weight: {unitWeight}
                   </Text>
                </Flex>
@@ -132,7 +117,6 @@ export const Card: React.FC<CardProps> = ({ product, addToCart }) => {
                   <Text
                      fontSize="2em"
                      letterSpacing="wide"
-                     color="white"
                      fontWeight="semibold"
                      textAlign="center"
                   >
@@ -141,29 +125,30 @@ export const Card: React.FC<CardProps> = ({ product, addToCart }) => {
                   <Center mt={6}>
                      <ProductModal product={product} />
                   </Center>
-                  <Box
-                     borderWidth="5px"
-                     borderColor="pink.800"
-                     borderRadius="xl"
-                     bg="pink.300"
-                  >
-                     <Button
-                        onClick={() => {
-                           addToCart({
-                              id: product.id,
-                              name: product.name,
-                              unitPrice: product.unitPrice,
-                              quantity: 1,
-                              image: 'elo',
-                           })
-                        }}
-                        variant="magic"
-                        bg="pink.200"
-                        color="black"
+                  <Center>
+                     <Box
+                        borderWidth="5px"
+                        borderColor="pink.800"
+                        borderRadius="xl"
+                        bg="pink.300"
+                        mt={2}
                      >
-                        Add to cart
-                     </Button>
-                  </Box>
+                        <Button
+                           onClick={() => {
+                              addToCart({
+                                 id: product.id,
+                                 name: product.name,
+                                 unitPrice: product.unitPrice,
+                                 quantity: 1,
+                                 image: 'elo',
+                              })
+                           }}
+                           variant="magic"
+                        >
+                           Add to cart
+                        </Button>
+                     </Box>
+                  </Center>
                </Box>
             </Center>
          </Flex>
