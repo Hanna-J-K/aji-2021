@@ -5,6 +5,8 @@ import {
    Container,
    Input,
    Select,
+   Center,
+   Box,
 } from '@chakra-ui/react'
 import Card from './DeckBuilder/Card'
 import { useProductsQuery, useCategoryQuery } from '../generated/graphql'
@@ -53,30 +55,42 @@ const ProductsGrid = () => {
    }
 
    return (
-      <Container maxW="none">
-         <Input
-            placeholder="searchbar"
-            value={phrase}
-            onChange={(e) => {
-               setPhrase(e.target.value)
-            }}
-         />
-         <Button
-            placeholder="filter"
-            colorScheme="teal"
-            variant="outline"
-            onClick={() => {
-               setCursor(0)
-               refetch()
-            }}
-         />
-         <Select placeholder="category">
-            {categoriesQueryResult.data?.category.map((category) =>
-               !category ? null : (
-                  <option value={category.name}>{category.name}</option>
-               )
-            )}
-         </Select>
+      <Container maxW="none" p={3}>
+         <Center my={5}>
+            <Flex>
+               <Input
+                  placeholder="Search for items"
+                  minW="lg"
+                  value={phrase}
+                  mx={2}
+                  onChange={(e) => {
+                     setPhrase(e.target.value)
+                  }}
+               />
+
+               <Select placeholder="Filter by category" maxW="lg">
+                  {categoriesQueryResult.data?.category.map((category) =>
+                     !category ? null : (
+                        <option value={category.name}>{category.name}</option>
+                     )
+                  )}
+               </Select>
+            </Flex>
+            <Flex justifyContent="space-around" mx={3}>
+               <Button
+                  placeholder="filter"
+                  variant="magic-navbar"
+                  maxW="xs"
+                  onClick={() => {
+                     setCursor(0)
+                     refetch()
+                  }}
+               >
+                  Search
+               </Button>
+            </Flex>
+         </Center>
+
          <SimpleGrid columns={4} spacing={2}>
             {data?.products.products.map((product) =>
                !product ? null : (
@@ -91,7 +105,7 @@ const ProductsGrid = () => {
          {data && data?.products.hasMore ? (
             <Flex>
                <Button
-                  colorScheme="teal"
+                  variant="magic-navbar"
                   onClick={() => {
                      setCursor(cursor + 12)
                      fetchMore({
@@ -109,7 +123,7 @@ const ProductsGrid = () => {
                   m="auto"
                   my={9}
                >
-                  i want more products
+                  Load more products
                </Button>
             </Flex>
          ) : null}

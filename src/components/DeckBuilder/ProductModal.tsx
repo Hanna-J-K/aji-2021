@@ -103,16 +103,6 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product }) => {
                            Close
                         </Button>
                      </Box>
-                     <Box
-                        borderWidth="5px"
-                        borderColor="pink.800"
-                        borderRadius="xl"
-                        bg="pink.300"
-                     >
-                        <Button variant="magic" bg="pink.200" color="black">
-                           Add to cart
-                        </Button>
-                     </Box>
                   </ModalFooter>
                </Flex>
             </ModalContent>

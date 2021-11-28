@@ -28,6 +28,10 @@ export const Cart: React.FC<CartProps> = () => {
    const [cartItems, setCartItems] = useContext(CartContext)
    const { isOpen, onOpen, onClose } = useDisclosure()
    const shopBtnRef = React.useRef()
+
+   const bgImg =
+      "url('https://images.unsplash.com/photo-1530362502708-d02c8f093039?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80')"
+
    const getTotalItems = (items: CartItemType[]) =>
       items.reduce(
          (accumulateTotal: number, item) => accumulateTotal + item.quantity,
@@ -70,13 +74,14 @@ export const Cart: React.FC<CartProps> = () => {
       )
    }
 
+   const handlePlacingOrder = (items: CartItemType[]) => {}
+
    return (
       <>
          <Flex mt={5} mb={7}>
             <Center
-               variant="solid"
+               variant="magic-navbar"
                bg="blue.200"
-               color="black"
                boxShadow="0 5px 5px 1px #521B41"
                borderRadius="lg"
                borderColor="blue.200"
@@ -107,8 +112,8 @@ export const Cart: React.FC<CartProps> = () => {
             size="md"
          >
             <DrawerOverlay />
-            <DrawerContent bg="gray.800" color="white">
-               <DrawerCloseButton color="red" />
+            <DrawerContent color="white" bg="gray.800" backgroundImage={bgImg}>
+               <DrawerCloseButton color="white" />
                <DrawerHeader>Shopping Cart</DrawerHeader>
                <DrawerBody>
                   {cartItems.length === 0 ? (
@@ -126,13 +131,13 @@ export const Cart: React.FC<CartProps> = () => {
                   ))}
                   {cartItems.length === 0 ? null : (
                      <Heading mt="3" as="h2" size="md">
-                        Total: ${calculateTotal(cartItems).toFixed(2)}
+                        Order total: ${calculateTotal(cartItems).toFixed(2)}
                      </Heading>
                   )}
                </DrawerBody>
 
                <DrawerFooter>
-                  <Button variant="magic" mr={3} onClick={onClose}>
+                  <Button variant="magic" mr={3} onClick={handlePlacingOrder}>
                      Place Order
                   </Button>
                </DrawerFooter>

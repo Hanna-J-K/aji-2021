@@ -1,4 +1,4 @@
-import { Container, Button } from '@chakra-ui/react'
+import { Container, Button, Flex, Text, Heading } from '@chakra-ui/react'
 import React from 'react'
 import { CartItemType } from '../../types/CartItemType'
 
@@ -14,32 +14,44 @@ export const CartItem: React.FC<CartItemProps> = ({
    removeFromCart,
 }) => (
    <Container color="white">
-      <div>
-         <h3>{item.name}</h3>
+      <Flex direction="column">
+         <Heading>{item.name}</Heading>
          <div>
-            <p>Price: ${item.unitPrice}</p>
-            <p>Total: ${(item.quantity * item.unitPrice).toFixed(2)}</p>
+            <Text fontSize="lg">Price: ${item.unitPrice}</Text>
+            <Text fontSize="lg">
+               Total for this item: $
+               {(item.quantity * item.unitPrice).toFixed(2)}
+            </Text>
          </div>
-         <div>
+         <Flex mt={3}>
+            <Text fontSize="lg" mr={3} mt={2}>
+               Quantity:
+            </Text>
+            <Text fontSize="2xl" mr={3}>
+               {item.quantity}
+            </Text>
             <Button
-               size="small"
+               mr={2}
+               mt={2}
+               size="xs"
                disableElevation
-               variant="contained"
+               variant="magic-navbar"
                onClick={() => removeFromCart(item.id)}
             >
                -
             </Button>
-            <p>{item.quantity}</p>
+
             <Button
-               size="small"
+               size="xs"
+               mt={2}
                disableElevation
-               variant="contained"
+               variant="magic-navbar"
                onClick={() => addToCart(item)}
             >
                +
             </Button>
-         </div>
-      </div>
+         </Flex>
+      </Flex>
       <img src={item.image} alt={''} />
    </Container>
 )

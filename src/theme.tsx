@@ -1,8 +1,5 @@
 import { extendTheme } from '@chakra-ui/react'
 import { createBreakpoints } from '@chakra-ui/theme-tools'
-// import '@fontsource/cinzel/400.css'
-
-// const fonts = { mono: `'Menlo', monospace` }
 
 const breakpoints = createBreakpoints({
    sm: '40em',
@@ -19,6 +16,10 @@ const theme = extendTheme({
             backgroundImage:
                "url('https://images.unsplash.com/photo-1530362502708-d02c8f093039?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80')",
             color: 'white',
+         },
+         'chakra-modal__content': {
+            backgroundImage:
+               "url('https://images.unsplash.com/photo-1530362502708-d02c8f093039?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80')",
          },
       },
    },
@@ -84,6 +85,13 @@ const theme = extendTheme({
       Text: {
          baseStyle: {
             textShadow: '1px 2px 2px #521B41',
+         },
+      },
+
+      DrawerContent: {
+         baseStyle: {
+            backgroundImage:
+               "url('https://images.unsplash.com/photo-1530362502708-d02c8f093039?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80')",
          },
       },
    },

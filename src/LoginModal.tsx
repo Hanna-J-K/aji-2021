@@ -15,8 +15,14 @@ import {
    Input,
 } from '@chakra-ui/react'
 
+import Link from 'next/link'
+
 export const LoginModal = () => {
    const { isOpen, onOpen, onClose } = useDisclosure()
+
+   const bgImg =
+      "url('https://images.unsplash.com/photo-1530362502708-d02c8f093039?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80')"
+
    return (
       <>
          <Button onClick={onOpen} variant="magic-navbar" m={5} mr={10}>
@@ -35,8 +41,8 @@ export const LoginModal = () => {
                borderColor="#121212"
                boxShadow="inset 0 0 10px 5px black"
                borderRadius="xl"
-               //    bg="rgba(42, 67, 101, 0.98)"
-               //    bgGradient="linear(to-tr, pink.800, orange.900, blue.800)"
+               bg="rgba(42, 67, 101, 0.98)"
+               backgroundImage={bgImg}
             >
                <Flex direction="column">
                   <ModalHeader
@@ -74,9 +80,11 @@ export const LoginModal = () => {
                         borderRadius="xl"
                         bg="pink.300"
                      >
-                        <Button variant="magic" bg="pink.300">
-                           Login
-                        </Button>
+                        <Link href="/Orders/OrdersTable">
+                           <Button variant="magic" bg="pink.300">
+                              <a>Login</a>
+                           </Button>
+                        </Link>
                      </Box>
                   </ModalFooter>
                </Flex>
