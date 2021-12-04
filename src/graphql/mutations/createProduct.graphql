@@ -1,6 +1,6 @@
 mutation CreateProduct($input: ProductInput!) {
    createProduct(input: $input) {
-      errors{
+      errors {
          ...DefaultError
       }
       product {

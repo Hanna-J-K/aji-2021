@@ -13,7 +13,7 @@ import {
 
 import OrderEditingModal from './OrderEditingModal'
 
-function OrdersTable() {
+export const OrdersTable = () => {
    return (
       <Box>
          <Accordion defaultIndex={[0]} allowMultiple>
@@ -26,7 +26,7 @@ function OrdersTable() {
                      <AccordionIcon />
                   </AccordionButton>
                </h2>
-               <AccordionPanel pb={4}>
+               <AccordionPanel pb={4}> 
                   <Box borderRadius="lg" boxShadow="0 1px 3px 0 #ffffff" p={5}>
                      <Box color="white"> Order placement date: </Box>
                      <Box color="white"> User: </Box>
@@ -87,5 +87,3 @@ function OrdersTable() {
       </Box>
    )
 }
-
-export default OrdersTable

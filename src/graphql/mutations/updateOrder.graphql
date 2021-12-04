@@ -1,0 +1,18 @@
+mutation UpdateOrder($status: String!, $updateOrderId: String!) {
+   updateOrder(status: $status, id: $updateOrderId) {
+      errors {
+         ...DefaultError
+      }
+      order {
+         id
+         orderPlaceDate
+         orderConfirmedDate
+         username
+         email
+         phone
+         status {
+            orderStatus
+         }
+      }
+   }
+}

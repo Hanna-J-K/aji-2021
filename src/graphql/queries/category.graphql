@@ -1,4 +1,4 @@
-   query category {
+   query Category {
       category {
          name
       }

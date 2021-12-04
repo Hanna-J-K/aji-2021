@@ -170,6 +170,13 @@ export type DefaultErrorFragment = { __typename?: 'FieldError', field: string, m
 
 export type DefaultProductFragment = { __typename?: 'Product', id: number, name: string, description: string, unitPrice: number, unitWeight: number, categories: Array<{ __typename?: 'Category', name: string }> };
 
+export type CreateOrderMutationVariables = Exact<{
+  input: OrderInput;
+}>;
+
+
+export type CreateOrderMutation = { __typename?: 'Mutation', createOrder: { __typename?: 'OrderResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: Array<string> }> | null | undefined, order?: { __typename?: 'Order', id: string, orderPlaceDate: string, orderConfirmedDate?: string | null | undefined, username: string, email: string, phone: string, status: { __typename?: 'OrderStatus', orderStatus: string }, orderedProducts: Array<{ __typename?: 'OrderedProduct', quantity: number, product_id: number }> } | null | undefined } };
+
 export type CreateProductMutationVariables = Exact<{
   input: ProductInput;
 }>;
@@ -177,10 +184,23 @@ export type CreateProductMutationVariables = Exact<{
 
 export type CreateProductMutation = { __typename?: 'Mutation', createProduct: { __typename?: 'ProductResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: Array<string> }> | null | undefined, product?: { __typename?: 'Product', id: number, name: string, description: string, unitPrice: number, unitWeight: number } | null | undefined } };
 
+export type UpdateOrderMutationVariables = Exact<{
+  status: Scalars['String'];
+  updateOrderId: Scalars['String'];
+}>;
+
+
+export type UpdateOrderMutation = { __typename?: 'Mutation', updateOrder: { __typename?: 'OrderResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: Array<string> }> | null | undefined, order?: { __typename?: 'Order', id: string, orderPlaceDate: string, orderConfirmedDate?: string | null | undefined, username: string, email: string, phone: string, status: { __typename?: 'OrderStatus', orderStatus: string } } | null | undefined } };
+
 export type CategoryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type CategoryQuery = { __typename?: 'Query', category: Array<{ __typename?: 'Category', name: string }> };
+
+export type OrdersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type OrdersQuery = { __typename?: 'Query', orders: Array<{ __typename?: 'Order', id: string, orderPlaceDate: string, orderConfirmedDate?: string | null | undefined, username: string, email: string, phone: string, status: { __typename?: 'OrderStatus', orderStatus: string }, orderedProducts: Array<{ __typename?: 'OrderedProduct', quantity: number, product_id: number }> }> };
 
 export type ProductsQueryVariables = Exact<{
   limit: Scalars['Int'];
@@ -209,6 +229,56 @@ export const DefaultProductFragmentDoc = gql`
   }
 }
     `;
+export const CreateOrderDocument = gql`
+    mutation CreateOrder($input: OrderInput!) {
+  createOrder(input: $input) {
+    errors {
+      ...DefaultError
+    }
+    order {
+      id
+      orderPlaceDate
+      orderConfirmedDate
+      username
+      email
+      phone
+      status {
+        orderStatus
+      }
+      orderedProducts {
+        quantity
+        product_id
+      }
+    }
+  }
+}
+    ${DefaultErrorFragmentDoc}`;
+export type CreateOrderMutationFn = Apollo.MutationFunction<CreateOrderMutation, CreateOrderMutationVariables>;
+
+/**
+ * __useCreateOrderMutation__
+ *
+ * To run a mutation, you first call `useCreateOrderMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateOrderMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createOrderMutation, { data, loading, error }] = useCreateOrderMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateOrderMutation(baseOptions?: Apollo.MutationHookOptions<CreateOrderMutation, CreateOrderMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateOrderMutation, CreateOrderMutationVariables>(CreateOrderDocument, options);
+      }
+export type CreateOrderMutationHookResult = ReturnType<typeof useCreateOrderMutation>;
+export type CreateOrderMutationResult = Apollo.MutationResult<CreateOrderMutation>;
+export type CreateOrderMutationOptions = Apollo.BaseMutationOptions<CreateOrderMutation, CreateOrderMutationVariables>;
 export const CreateProductDocument = gql`
     mutation CreateProduct($input: ProductInput!) {
   createProduct(input: $input) {
@@ -251,8 +321,55 @@ export function useCreateProductMutation(baseOptions?: Apollo.MutationHookOption
 export type CreateProductMutationHookResult = ReturnType<typeof useCreateProductMutation>;
 export type CreateProductMutationResult = Apollo.MutationResult<CreateProductMutation>;
 export type CreateProductMutationOptions = Apollo.BaseMutationOptions<CreateProductMutation, CreateProductMutationVariables>;
+export const UpdateOrderDocument = gql`
+    mutation UpdateOrder($status: String!, $updateOrderId: String!) {
+  updateOrder(status: $status, id: $updateOrderId) {
+    errors {
+      ...DefaultError
+    }
+    order {
+      id
+      orderPlaceDate
+      orderConfirmedDate
+      username
+      email
+      phone
+      status {
+        orderStatus
+      }
+    }
+  }
+}
+    ${DefaultErrorFragmentDoc}`;
+export type UpdateOrderMutationFn = Apollo.MutationFunction<UpdateOrderMutation, UpdateOrderMutationVariables>;
+
+/**
+ * __useUpdateOrderMutation__
+ *
+ * To run a mutation, you first call `useUpdateOrderMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateOrderMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateOrderMutation, { data, loading, error }] = useUpdateOrderMutation({
+ *   variables: {
+ *      status: // value for 'status'
+ *      updateOrderId: // value for 'updateOrderId'
+ *   },
+ * });
+ */
+export function useUpdateOrderMutation(baseOptions?: Apollo.MutationHookOptions<UpdateOrderMutation, UpdateOrderMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateOrderMutation, UpdateOrderMutationVariables>(UpdateOrderDocument, options);
+      }
+export type UpdateOrderMutationHookResult = ReturnType<typeof useUpdateOrderMutation>;
+export type UpdateOrderMutationResult = Apollo.MutationResult<UpdateOrderMutation>;
+export type UpdateOrderMutationOptions = Apollo.BaseMutationOptions<UpdateOrderMutation, UpdateOrderMutationVariables>;
 export const CategoryDocument = gql`
-    query category {
+    query Category {
   category {
     name
   }
@@ -285,6 +402,52 @@ export function useCategoryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<C
 export type CategoryQueryHookResult = ReturnType<typeof useCategoryQuery>;
 export type CategoryLazyQueryHookResult = ReturnType<typeof useCategoryLazyQuery>;
 export type CategoryQueryResult = Apollo.QueryResult<CategoryQuery, CategoryQueryVariables>;
+export const OrdersDocument = gql`
+    query Orders {
+  orders {
+    id
+    orderPlaceDate
+    orderConfirmedDate
+    username
+    email
+    phone
+    status {
+      orderStatus
+    }
+    orderedProducts {
+      quantity
+      product_id
+    }
+  }
+}
+    `;
+
+/**
+ * __useOrdersQuery__
+ *
+ * To run a query within a React component, call `useOrdersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useOrdersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useOrdersQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useOrdersQuery(baseOptions?: Apollo.QueryHookOptions<OrdersQuery, OrdersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<OrdersQuery, OrdersQueryVariables>(OrdersDocument, options);
+      }
+export function useOrdersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<OrdersQuery, OrdersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<OrdersQuery, OrdersQueryVariables>(OrdersDocument, options);
+        }
+export type OrdersQueryHookResult = ReturnType<typeof useOrdersQuery>;
+export type OrdersLazyQueryHookResult = ReturnType<typeof useOrdersLazyQuery>;
+export type OrdersQueryResult = Apollo.QueryResult<OrdersQuery, OrdersQueryVariables>;
 export const ProductsDocument = gql`
     query Products($limit: Int!, $cursor: Int!, $phrase: String) {
   products(limit: $limit, cursor: $cursor, phrase: $phrase) {

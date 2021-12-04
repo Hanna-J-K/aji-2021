@@ -4,12 +4,10 @@ import {
    Flex,
    Container,
    Input,
-   Select,
    Center,
-   Box,
 } from '@chakra-ui/react'
 import Card from './DeckBuilder/Card'
-import { useProductsQuery, useCategoryQuery } from '../generated/graphql'
+import { useProductsQuery } from '../generated/graphql'
 import React, { useContext, useState } from 'react'
 import CartContext from '../contexts/CartContext'
 import { CartItemType } from '../types/CartItemType'
@@ -44,16 +42,6 @@ const ProductsGrid = () => {
          notifyOnNetworkStatusChange: true,
       })
 
-   const categoriesQueryResult = useCategoryQuery()
-   if (!loading && !data) {
-      return (
-         <div>
-            <div>TBD (query failed, no data fetched)</div>
-            <div>{error?.message}</div>
-         </div>
-      )
-   }
-
    return (
       <Container maxW="none" p={3}>
          <Center my={5}>
@@ -68,13 +56,6 @@ const ProductsGrid = () => {
                   }}
                />
 
-               <Select placeholder="Filter by category" maxW="lg">
-                  {categoriesQueryResult.data?.category.map((category) =>
-                     !category ? null : (
-                        <option value={category.name}>{category.name}</option>
-                     )
-                  )}
-               </Select>
             </Flex>
             <Flex justifyContent="space-around" mx={3}>
                <Button

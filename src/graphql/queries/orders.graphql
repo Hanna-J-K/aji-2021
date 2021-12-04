@@ -1,0 +1,17 @@
+query Orders {
+   orders {
+      id
+      orderPlaceDate
+      orderConfirmedDate
+      username
+      email
+      phone
+      status {
+         orderStatus
+      }
+      orderedProducts {
+         quantity
+         product_id
+      }
+   }
+}

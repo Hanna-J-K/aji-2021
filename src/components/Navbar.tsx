@@ -1,7 +1,7 @@
 import { Box, Flex, Heading } from '@chakra-ui/layout'
 import React from 'react'
 import { Cart } from '../components/Cart/Cart'
-import LoginModal from '../LoginModal'
+import LoginModal from './LoginModal'
 
 export const Navbar = () => {
    return (

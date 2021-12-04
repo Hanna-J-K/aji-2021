@@ -140,7 +140,7 @@ export const Card: React.FC<CardProps> = ({ product, addToCart }) => {
                                  name: product.name,
                                  unitPrice: product.unitPrice,
                                  quantity: 1,
-                                 image: 'elo',
+                                 image: 'https://via.placeholder.com/40x20',
                               })
                            }}
                            variant="magic"

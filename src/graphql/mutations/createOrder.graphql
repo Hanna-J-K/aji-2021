@@ -1,0 +1,22 @@
+mutation CreateOrder($input: OrderInput!) {
+   createOrder(input: $input) {
+      errors {
+         ...DefaultError
+      }
+      order {
+         id
+         orderPlaceDate
+         orderConfirmedDate
+         username
+         email
+         phone
+         status {
+            orderStatus
+         }
+         orderedProducts {
+            quantity
+            product_id
+         }
+      }
+   }
+}

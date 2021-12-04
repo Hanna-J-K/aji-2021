@@ -7,7 +7,6 @@ import {
    DrawerOverlay,
    DrawerContent,
    DrawerCloseButton,
-   Button,
    IconButton,
    useDisclosure,
    Icon,
@@ -21,6 +20,7 @@ import { CartItemType } from '../../types/CartItemType'
 import { CartItem } from './CartItem'
 import { BiCartAlt } from '@react-icons/all-files/bi/BiCartAlt'
 import CartContext from '../../contexts/CartContext'
+import { PlaceOrderModal } from './PlaceOrderModal'
 
 interface CartProps {}
 
@@ -74,8 +74,6 @@ export const Cart: React.FC<CartProps> = () => {
       )
    }
 
-   const handlePlacingOrder = (items: CartItemType[]) => {}
-
    return (
       <>
          <Flex mt={5} mb={7}>
@@ -95,7 +93,8 @@ export const Cart: React.FC<CartProps> = () => {
                   w="50px"
                   ref={shopBtnRef.current}
                   aria-label="show cart"
-                  icon={<Icon as={BiCartAlt} onClick={onOpen} />}
+                  onClick={onOpen}
+                  icon={<Icon as={BiCartAlt} />}
                ></IconButton>
                <Badge bg="pink.700" color="white">
                   {' '}
@@ -137,9 +136,9 @@ export const Cart: React.FC<CartProps> = () => {
                </DrawerBody>
 
                <DrawerFooter>
-                  <Button variant="magic" mr={3} onClick={handlePlacingOrder}>
-                     Place Order
-                  </Button>
+                  {cartItems.length !== 0 ? (
+                     <PlaceOrderModal orderedProducts={cartItems} />
+                  ) : null}
                </DrawerFooter>
             </DrawerContent>
          </Drawer>

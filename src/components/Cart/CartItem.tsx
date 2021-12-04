@@ -22,6 +22,7 @@ export const CartItem: React.FC<CartItemProps> = ({
                Total for this item: $
                {(item.quantity * item.unitPrice).toFixed(2)}
             </Text>
+            <img src={item.image} alt={''} />
          </div>
          <Flex mt={3}>
             <Text fontSize="lg" mr={3} mt={2}>
@@ -34,7 +35,6 @@ export const CartItem: React.FC<CartItemProps> = ({
                mr={2}
                mt={2}
                size="xs"
-               disableElevation
                variant="magic-navbar"
                onClick={() => removeFromCart(item.id)}
             >
@@ -44,7 +44,6 @@ export const CartItem: React.FC<CartItemProps> = ({
             <Button
                size="xs"
                mt={2}
-               disableElevation
                variant="magic-navbar"
                onClick={() => addToCart(item)}
             >
@@ -52,6 +51,5 @@ export const CartItem: React.FC<CartItemProps> = ({
             </Button>
          </Flex>
       </Flex>
-      <img src={item.image} alt={''} />
    </Container>
 )
