@@ -19,16 +19,11 @@ import { Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react'
 import { EditIcon, ChevronDownIcon } from '@chakra-ui/icons'
 
 import { Order } from '../../types/OrderType'
-import { useState } from 'react'
 
 function OrderEditingModal(props: Order) {
    const { id, orderPlaceDate, username, email, phone, status } = props
    const { isOpen, onOpen, onClose } = useDisclosure()
-   const { orderStatus, setOrderStatus } = useState({ status })
 
-   const changeOrderStatus = () => {
-      setOrderStatus('whatever')
-   }
    return (
       <>
          <IconButton
@@ -81,7 +76,6 @@ function OrderEditingModal(props: Order) {
                            <Text> Order status: {status} </Text>
                            <Menu>
                               <MenuButton
-                                 changeOrderStatus={changeOrderStatus}
                                  as={Button}
                                  variant="magic"
                                  rightIcon={<ChevronDownIcon />}

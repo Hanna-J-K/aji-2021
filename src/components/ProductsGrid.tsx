@@ -11,6 +11,7 @@ import { useProductsQuery } from '../generated/graphql'
 import React, { useContext, useState } from 'react'
 import CartContext from '../contexts/CartContext'
 import { CartItemType } from '../types/CartItemType'
+import { OrdersTable } from './Orders/OrdersTable'
 
 const ProductsGrid = () => {
    const [_, setCartItems] = useContext(CartContext)
@@ -55,7 +56,6 @@ const ProductsGrid = () => {
                      setPhrase(e.target.value)
                   }}
                />
-
             </Flex>
             <Flex justifyContent="space-around" mx={3}>
                <Button
@@ -71,6 +71,8 @@ const ProductsGrid = () => {
                </Button>
             </Flex>
          </Center>
+
+         <OrdersTable />
 
          <SimpleGrid columns={4} spacing={2}>
             {data?.products.products.map((product) =>

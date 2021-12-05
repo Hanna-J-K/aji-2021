@@ -1,12 +1,12 @@
 export interface Order {
    id: string
-   orderPlaceDate: Date
-   orderConfirmedDate: Date
+   orderPlaceDate: string
+   orderConfirmedDate: string | null | undefined
    username: string
    email: string
    phone: string
    status: string
-   orderProducts: Array<string>
+   orderProducts: OrderedProduct[]
 }
 
 export interface OrderedProduct {
