@@ -1,0 +1,11 @@
+fragment DefaultOrder on Order {
+   id
+   orderPlaceDate
+   orderConfirmedDate
+   username
+   email
+   phone
+   status {
+      orderStatus
+   }
+}

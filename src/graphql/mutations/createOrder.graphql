@@ -4,15 +4,7 @@ mutation CreateOrder($input: OrderInput!) {
          ...DefaultError
       }
       order {
-         id
-         orderPlaceDate
-         orderConfirmedDate
-         username
-         email
-         phone
-         status {
-            orderStatus
-         }
+         ...DefaultOrder
          orderedProducts {
             quantity
             product_id

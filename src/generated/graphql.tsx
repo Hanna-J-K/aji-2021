@@ -168,6 +168,8 @@ export type QueryUserOrdersArgs = {
 
 export type DefaultErrorFragment = { __typename?: 'FieldError', field: string, message: Array<string> };
 
+export type DefaultOrderFragment = { __typename?: 'Order', id: string, orderPlaceDate: string, orderConfirmedDate?: string | null | undefined, username: string, email: string, phone: string, status: { __typename?: 'OrderStatus', orderStatus: string } };
+
 export type DefaultProductFragment = { __typename?: 'Product', id: number, name: string, description: string, unitPrice: number, unitWeight: number, categories: Array<{ __typename?: 'Category', name: string }> };
 
 export type CreateOrderMutationVariables = Exact<{
@@ -175,7 +177,7 @@ export type CreateOrderMutationVariables = Exact<{
 }>;
 
 
-export type CreateOrderMutation = { __typename?: 'Mutation', createOrder: { __typename?: 'OrderResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: Array<string> }> | null | undefined, order?: { __typename?: 'Order', id: string, orderPlaceDate: string, orderConfirmedDate?: string | null | undefined, username: string, email: string, phone: string, status: { __typename?: 'OrderStatus', orderStatus: string }, orderedProducts: Array<{ __typename?: 'OrderedProduct', quantity: number, product_id: number }> } | null | undefined } };
+export type CreateOrderMutation = { __typename?: 'Mutation', createOrder: { __typename?: 'OrderResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: Array<string> }> | null | undefined, order?: { __typename?: 'Order', id: string, orderPlaceDate: string, orderConfirmedDate?: string | null | undefined, username: string, email: string, phone: string, orderedProducts: Array<{ __typename?: 'OrderedProduct', quantity: number, product_id: number }>, status: { __typename?: 'OrderStatus', orderStatus: string } } | null | undefined } };
 
 export type CreateProductMutationVariables = Exact<{
   input: ProductInput;
@@ -200,7 +202,7 @@ export type CategoryQuery = { __typename?: 'Query', category: Array<{ __typename
 export type OrdersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type OrdersQuery = { __typename?: 'Query', orders: Array<{ __typename?: 'Order', id: string, orderPlaceDate: string, orderConfirmedDate?: string | null | undefined, username: string, email: string, phone: string, status: { __typename?: 'OrderStatus', orderStatus: string }, orderedProducts: Array<{ __typename?: 'OrderedProduct', quantity: number, product_id: number }> }> };
+export type OrdersQuery = { __typename?: 'Query', orders: Array<{ __typename?: 'Order', id: string, orderPlaceDate: string, orderConfirmedDate?: string | null | undefined, username: string, email: string, phone: string, orderedProducts: Array<{ __typename?: 'OrderedProduct', quantity: number, product_id: number }>, status: { __typename?: 'OrderStatus', orderStatus: string } }> };
 
 export type ProductsQueryVariables = Exact<{
   limit: Scalars['Int'];
@@ -215,6 +217,19 @@ export const DefaultErrorFragmentDoc = gql`
     fragment DefaultError on FieldError {
   field
   message
+}
+    `;
+export const DefaultOrderFragmentDoc = gql`
+    fragment DefaultOrder on Order {
+  id
+  orderPlaceDate
+  orderConfirmedDate
+  username
+  email
+  phone
+  status {
+    orderStatus
+  }
 }
     `;
 export const DefaultProductFragmentDoc = gql`
@@ -236,15 +251,7 @@ export const CreateOrderDocument = gql`
       ...DefaultError
     }
     order {
-      id
-      orderPlaceDate
-      orderConfirmedDate
-      username
-      email
-      phone
-      status {
-        orderStatus
-      }
+      ...DefaultOrder
       orderedProducts {
         quantity
         product_id
@@ -252,7 +259,8 @@ export const CreateOrderDocument = gql`
     }
   }
 }
-    ${DefaultErrorFragmentDoc}`;
+    ${DefaultErrorFragmentDoc}
+${DefaultOrderFragmentDoc}`;
 export type CreateOrderMutationFn = Apollo.MutationFunction<CreateOrderMutation, CreateOrderMutationVariables>;
 
 /**
@@ -328,19 +336,12 @@ export const UpdateOrderDocument = gql`
       ...DefaultError
     }
     order {
-      id
-      orderPlaceDate
-      orderConfirmedDate
-      username
-      email
-      phone
-      status {
-        orderStatus
-      }
+      ...DefaultOrder
     }
   }
 }
-    ${DefaultErrorFragmentDoc}`;
+    ${DefaultErrorFragmentDoc}
+${DefaultOrderFragmentDoc}`;
 export type UpdateOrderMutationFn = Apollo.MutationFunction<UpdateOrderMutation, UpdateOrderMutationVariables>;
 
 /**
@@ -405,22 +406,14 @@ export type CategoryQueryResult = Apollo.QueryResult<CategoryQuery, CategoryQuer
 export const OrdersDocument = gql`
     query Orders {
   orders {
-    id
-    orderPlaceDate
-    orderConfirmedDate
-    username
-    email
-    phone
-    status {
-      orderStatus
-    }
+    ...DefaultOrder
     orderedProducts {
       quantity
       product_id
     }
   }
 }
-    `;
+    ${DefaultOrderFragmentDoc}`;
 
 /**
  * __useOrdersQuery__

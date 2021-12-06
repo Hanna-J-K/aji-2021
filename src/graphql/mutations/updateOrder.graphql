@@ -4,15 +4,7 @@ mutation UpdateOrder($status: String!, $updateOrderId: String!) {
          ...DefaultError
       }
       order {
-         id
-         orderPlaceDate
-         orderConfirmedDate
-         username
-         email
-         phone
-         status {
-            orderStatus
-         }
+         ...DefaultOrder
       }
    }
 }

@@ -1,5 +1,5 @@
-query Orders {
-   orders {
+query OrdersByStatus($status: String!) {
+   ordersByStatus(status: $status) {
       ...DefaultOrder
       orderedProducts {
          quantity
