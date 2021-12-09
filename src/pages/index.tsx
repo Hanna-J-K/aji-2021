@@ -10,7 +10,7 @@ const Index = () => {
    return (
       <>
          <CartProvider value={[cartItems, setCartItems]}>
-            <Navbar />
+            <Navbar title="Olli-wand-er" buttons={true} />
             <ProductsGrid />
          </CartProvider>
       </>

@@ -1213,6 +1213,11 @@
   resolved "https://registry.yarnpkg.com/@fontsource/comfortaa/-/comfortaa-4.5.1.tgz#0d15aad457f54a1a8986d6a2b46e3eb02a75ec73"
   integrity sha512-ZmkhXYlCcDLNK2G3W+uBA5FIRl+czS40JmiUZ7WwjlMj6qsuXJmn0oG/i2sFZuoDiNuGekAWdG/02cs5gIoCzw==
 
+"@fontsource/hahmlet@^4.5.3":
+  version "4.5.3"
+  resolved "https://registry.yarnpkg.com/@fontsource/hahmlet/-/hahmlet-4.5.3.tgz#41ddfc855073c146e63e77cfd432af015ef156af"
+  integrity sha512-JiNXcSLmxZGrVZ7MlGDHEOp4bkR0S7d3FdHrsOi5SPKCNjmR316EaYTMxQScXSznJ6S7KA9O3IrP3AbGpWi4Qg==
+
 "@fontsource/open-sans@^4.5.2":
   version "4.5.2"
   resolved "https://registry.yarnpkg.com/@fontsource/open-sans/-/open-sans-4.5.2.tgz#6953650035d5b42be645013b1465544d0af49d7d"

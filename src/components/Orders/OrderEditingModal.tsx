@@ -18,7 +18,7 @@ import { Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react'
 
 import { EditIcon, ChevronDownIcon } from '@chakra-ui/icons'
 
-import { Order } from '../../types/OrderType'
+import { Order } from '../types/OrderType'
 
 function OrderEditingModal(props: Order) {
    const { id, orderPlaceDate, username, email, phone, status } = props
@@ -30,7 +30,7 @@ function OrderEditingModal(props: Order) {
             onClick={onOpen}
             variant="magic"
             m={5}
-            color="yellow.800"
+            color="blue.800"
             aria-label="edit"
             icon={<EditIcon />}
          />

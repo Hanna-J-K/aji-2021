@@ -3,7 +3,12 @@ import React from 'react'
 import { Cart } from '../components/Cart/Cart'
 import LoginModal from './LoginModal'
 
-export const Navbar = () => {
+interface Title {
+   title: String
+   buttons: Boolean
+}
+
+export const Navbar = ({ title, buttons }: Title) => {
    return (
       <Flex
          mb={10}
@@ -16,13 +21,14 @@ export const Navbar = () => {
          boxShadow="0 5px 5px 3px black"
       >
          <Box m={5} ml={10} color="white">
-            <Heading>Ollie-wand-er</Heading>
+            <Heading>{title}</Heading>
          </Box>
-
-         <Flex>
-            <Cart />
-            <LoginModal />
-         </Flex>
+         {buttons && (
+            <Flex>
+               <Cart />
+               <LoginModal />
+            </Flex>
+         )}
       </Flex>
    )
 }

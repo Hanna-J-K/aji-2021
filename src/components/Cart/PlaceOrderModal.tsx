@@ -55,9 +55,11 @@ export const PlaceOrderModal: React.FC<PlaceOrderModalProps> = ({
          >
             <ModalOverlay />
             <ModalContent>
-               <ModalHeader>Provide your contact information</ModalHeader>
+               <ModalHeader bg="gray.800">
+                  Provide your contact information
+               </ModalHeader>
                <ModalCloseButton />
-               <ModalBody pb={6}>
+               <ModalBody pb={6} bg="gray.800">
                   <Formik
                      initialValues={{ username: '', email: '', phone: '' }}
                      validateOnChange={false}
@@ -125,8 +127,10 @@ export const PlaceOrderModal: React.FC<PlaceOrderModalProps> = ({
                   </Formik>
                </ModalBody>
 
-               <ModalFooter>
-                  <Button onClick={onClose}>Cancel</Button>
+               <ModalFooter bg="gray.800">
+                  <Button onClick={onClose} variant="magic" bg="pink.400">
+                     Cancel
+                  </Button>
                </ModalFooter>
             </ModalContent>
          </Modal>

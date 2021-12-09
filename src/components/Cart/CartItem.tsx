@@ -1,4 +1,4 @@
-import { Container, Button, Flex, Text, Heading } from '@chakra-ui/react'
+import { Container, Button, Flex, Text, Heading, Box } from '@chakra-ui/react'
 import React from 'react'
 import { CartItemType } from '../../types/CartItemType'
 
@@ -17,12 +17,14 @@ export const CartItem: React.FC<CartItemProps> = ({
       <Flex direction="column">
          <Heading>{item.name}</Heading>
          <div>
+            <Box minH="100px" minW="240px">
+               <img src={item.image} alt={''} />
+            </Box>
             <Text fontSize="lg">Price: ${item.unitPrice}</Text>
             <Text fontSize="lg">
                Total for this item: $
                {(item.quantity * item.unitPrice).toFixed(2)}
             </Text>
-            <img src={item.image} alt={''} />
          </div>
          <Flex mt={3}>
             <Text fontSize="lg" mr={3} mt={2}>

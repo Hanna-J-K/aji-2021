@@ -26,7 +26,8 @@ const theme = extendTheme({
 
    breakpoints,
    fonts: {
-      heading: 'Cinzel',
+      // heading: 'Cinzel',
+      heading: 'Hahmlet',
       body: 'Raleway',
    },
    icons: {

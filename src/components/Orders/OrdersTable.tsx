@@ -9,25 +9,45 @@ import {
    Text,
    Center,
    IconButton,
+   Heading,
 } from '@chakra-ui/react'
 import { useOrdersQuery } from '../../generated/graphql'
 
 import OrderEditingModal from './OrderEditingModal'
+import { Navbar } from '../Navbar'
 
 export const OrdersTable: React.FC<{}> = () => {
    const { data } = useOrdersQuery({
       notifyOnNetworkStatusChange: true,
    })
+
    return (
       <Box>
-         <Accordion defaultIndex={[0]} allowMultiple>
+         <Navbar title="Admin Panel" buttons={false} />
+         <Box mx={20} fontSize="2xl">
+            <Text>Click on an order to expand for more information.</Text>
+            <Text>Edit or delete orders using buttons.</Text>
+         </Box>
+         <Accordion
+            borderWidth="4px"
+            borderRadius="lg"
+            borderColor="pink.800"
+            mx="auto"
+            my="20"
+            maxW="50%"
+            defaultIndex={[0]}
+            allowMultiple
+         >
             {data?.orders.map((order) =>
                !order ? null : (
-                  <AccordionItem key={order.id}>
+                  <AccordionItem bg="gray.900" key={order.id}>
                      <h2>
                         <AccordionButton>
                            <Box flex="1" textAlign="left">
-                              {order.orderPlaceDate}
+                              <Heading fontSize="lg">
+                                 Order ID: {order.id}
+                              </Heading>
+                              <Text>Date placed: {order.orderPlaceDate}</Text>
                            </Box>
                            <AccordionIcon />
                         </AccordionButton>
@@ -37,19 +57,19 @@ export const OrdersTable: React.FC<{}> = () => {
                            borderRadius="lg"
                            boxShadow="0 1px 3px 0 #ffffff"
                            p={5}
+                           color="white"
+                           bg="gray.800"
                         >
-                           <Box color="white">
+                           <Box>
                               {' '}
                               Order placement date: {order.orderPlaceDate}
                            </Box>
-                           <Box color="white"> User: {order.username}</Box>
-                           <Box color="white"> User e-mail: {order.email}</Box>
-                           <Box color="white">
-                              {' '}
-                              User contact phone: {order.phone}
-                           </Box>
-                           <Box color="white" fontWeight="semibold">
-                              Order status: {order.status.orderStatus}
+                           <Box> User: {order.username}</Box>
+                           <Box> User e-mail: {order.email}</Box>
+                           <Box> User contact phone: {order.phone}</Box>
+                           <Box fontWeight="semibold">
+                              Order status: "great"
+                              {/* Order status: "{order.status.orderStatus}" */}
                            </Box>
                         </Box>
                         <Center>
@@ -66,7 +86,7 @@ export const OrdersTable: React.FC<{}> = () => {
                            <IconButton
                               variant="magic"
                               m={5}
-                              color="yellow.800"
+                              color="red.800"
                               aria-label="edit"
                               icon={<DeleteIcon />}
                            />
