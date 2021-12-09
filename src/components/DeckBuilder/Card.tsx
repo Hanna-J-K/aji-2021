@@ -3,13 +3,15 @@ import React from 'react'
 import { CartItemType } from '../../types/CartItemType'
 import { Product } from '../../types/ProductType'
 import ProductModal from './ProductModal'
+import { AdminProductEditingModal } from '../AdminView/AdminProductEditingModal'
 
 interface CardProps {
    product: Product
    addToCart: (clickedItem: CartItemType) => void
+   view: Boolean
 }
 
-export const Card: React.FC<CardProps> = ({ product, addToCart }) => {
+export const Card: React.FC<CardProps> = ({ product, addToCart, view }) => {
    const { name, unitPrice, unitWeight, categories } = product
    const backgroundImage = {
       imageUrl:
@@ -20,6 +22,60 @@ export const Card: React.FC<CardProps> = ({ product, addToCart }) => {
    const productImage = {
       imageUrl: 'https://via.placeholder.com/380x200',
       imageAlt: 'Kill this love',
+   }
+
+   let buttons = (
+      <>
+         <Center mt={6}>
+            <ProductModal product={product} />
+         </Center>
+         <Center>
+            <Box
+               borderWidth="5px"
+               borderColor="pink.800"
+               borderRadius="xl"
+               bg="pink.300"
+               mt={2}
+            >
+               <Button
+                  onClick={() => {
+                     addToCart({
+                        id: product.id,
+                        name: product.name,
+                        unitPrice: product.unitPrice,
+                        quantity: 1,
+                        image: 'https://via.placeholder.com/240x100',
+                     })
+                  }}
+                  variant="magic"
+               >
+                  Add to cart
+               </Button>
+            </Box>
+         </Center>
+      </>
+   )
+
+   if (view) {
+      buttons = (
+         <>
+            {' '}
+            <Center mt={6}>
+               <AdminProductEditingModal product={product} />
+            </Center>
+            <Center>
+               <Box
+                  borderWidth="5px"
+                  borderColor="pink.800"
+                  borderRadius="xl"
+                  bg="pink.300"
+                  mt={2}
+               >
+                  <Button variant="magic">Delete from stock</Button>
+               </Box>
+            </Center>
+         </>
+      )
    }
 
    return (
@@ -122,33 +178,8 @@ export const Card: React.FC<CardProps> = ({ product, addToCart }) => {
                   >
                      {categories}
                   </Text>
-                  <Center mt={6}>
-                     <ProductModal product={product} />
-                  </Center>
-                  <Center>
-                     <Box
-                        borderWidth="5px"
-                        borderColor="pink.800"
-                        borderRadius="xl"
-                        bg="pink.300"
-                        mt={2}
-                     >
-                        <Button
-                           onClick={() => {
-                              addToCart({
-                                 id: product.id,
-                                 name: product.name,
-                                 unitPrice: product.unitPrice,
-                                 quantity: 1,
-                                 image: 'https://via.placeholder.com/40x20',
-                              })
-                           }}
-                           variant="magic"
-                        >
-                           Add to cart
-                        </Button>
-                     </Box>
-                  </Center>
+
+                  {buttons}
                </Box>
             </Center>
          </Flex>

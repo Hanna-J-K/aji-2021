@@ -23,7 +23,7 @@ export const OrdersTable: React.FC<{}> = () => {
 
    return (
       <Box>
-         <Navbar title="Admin Panel" buttons={false} />
+         <Navbar title="Admin Orders Panel" buttons={false} />
          <Box mx={20} fontSize="2xl">
             <Text>Click on an order to expand for more information.</Text>
             <Text>Edit or delete orders using buttons.</Text>

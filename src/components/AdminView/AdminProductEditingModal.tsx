@@ -20,7 +20,9 @@ interface ProductModalProps {
    product: Product
 }
 
-export const ProductModal: React.FC<ProductModalProps> = ({ product }) => {
+export const AdminProductEditingModal: React.FC<ProductModalProps> = ({
+   product,
+}) => {
    const productImage = {
       imageUrl: 'https://via.placeholder.com/570x300',
       imageAlt: 'Kill this love',
@@ -35,8 +37,8 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product }) => {
             borderRadius="xl"
             bg="pink.300"
          >
-            <Button onClick={onOpen} variant="magic">
-               See more
+            <Button onClick={onOpen} variant="magic-navbar">
+               Edit this product
             </Button>
          </Box>
 
@@ -112,4 +114,4 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product }) => {
    )
 }
 
-export default ProductModal
+export default AdminProductEditingModal

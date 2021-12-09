@@ -5,34 +5,19 @@ import {
    Container,
    Input,
    Center,
+   Text,
+   Box,
 } from '@chakra-ui/react'
-import Card from './DeckBuilder/Card'
-import { useProductsQuery } from '../generated/graphql'
-import React, { useContext, useState } from 'react'
-import CartContext from '../contexts/CartContext'
-import { CartItemType } from '../types/CartItemType'
-import { OrdersTable } from './Orders/OrdersTable'
-import AdminProductsGrid from './AdminView/AdminProductsGrid'
+import Card from '../DeckBuilder/Card'
+import AdminProductAddingModal from './AdminProductAddingModal'
+import { Navbar } from '../Navbar'
+import { useProductsQuery } from '../../generated/graphql'
+import React, { useState } from 'react'
 
-const ProductsGrid = () => {
-   const [_, setCartItems] = useContext(CartContext)
+const AdminProductsGrid = () => {
    const [phrase, setPhrase] = useState('')
    const [limit, setLimit] = useState(12)
    const [cursor, setCursor] = useState(0)
-   const handleAddToCart = (clickedItem: CartItemType) => {
-      setCartItems((cart) => {
-         const isItemInCart = cart.find((item) => item.id === clickedItem.id)
-
-         if (isItemInCart) {
-            return cart.map((item) =>
-               item.id === clickedItem.id
-                  ? { ...item, quantity: item.quantity + 1 }
-                  : item
-            )
-         }
-         return [...cart, { ...clickedItem, amount: 1 }]
-      })
-   }
 
    const { data, error, loading, fetchMore, variables, refetch } =
       useProductsQuery({
@@ -46,6 +31,15 @@ const ProductsGrid = () => {
 
    return (
       <Container maxW="none" p={3}>
+         <Navbar title="Admin Products Panel" buttons={false} />
+         <Box mx={20} fontSize="2xl">
+            <Text>Add new products when needed.</Text>
+            <Text>Edit or delete products using buttons.</Text>
+         </Box>
+         <Center>
+            <AdminProductAddingModal />
+         </Center>
+
          <Center my={5}>
             <Flex>
                <Input
@@ -73,18 +67,10 @@ const ProductsGrid = () => {
             </Flex>
          </Center>
 
-         <AdminProductsGrid />
-         <OrdersTable />
-
          <SimpleGrid columns={4} spacing={2}>
             {data?.products.products.map((product) =>
                !product ? null : (
-                  <Card
-                     key={product.id}
-                     product={product}
-                     addToCart={handleAddToCart}
-                     view={false}
-                  />
+                  <Card key={product.id} product={product} view={true} />
                )
             )}
          </SimpleGrid>
@@ -117,4 +103,4 @@ const ProductsGrid = () => {
    )
 }
 
-export default ProductsGrid
+export default AdminProductsGrid
