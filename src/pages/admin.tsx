@@ -4,8 +4,10 @@ import { useState } from 'react'
 import { Navbar } from '../components/Navbar'
 import { Button, Center } from '@chakra-ui/react'
 import { OrdersTable } from '../components/Orders/OrdersTable'
+import { useIsAuth } from '../utils/useIsAuth'
 
-const AdminPanel = () => {
+const AdminPanel: React.FC<{}> = () => {
+   useIsAuth()
    const [panel, setPanel] = useState(1)
    let adminContent
    let navbarTitle = 'Admin Dashboard'
