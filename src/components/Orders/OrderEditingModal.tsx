@@ -85,7 +85,9 @@ function OrderEditingModal(props: Order) {
                               onSubmit={async (values, { setErrors }) => {
                                  const response = await updateOrder({
                                     variables: {
-                                       status: `${statuses.indexOf(orderStatus) + 1}`,
+                                       status: `${
+                                          statuses.indexOf(orderStatus) + 1
+                                       }`,
                                        updateOrderId: id,
                                     },
                                     update: (cache) => {
@@ -158,17 +160,6 @@ function OrderEditingModal(props: Order) {
                   </ModalBody>
 
                   <ModalFooter>
-                     <Box
-                        borderWidth="5px"
-                        borderColor="pink.800"
-                        borderRadius="xl"
-                        bg="pink.300"
-                        mr={3}
-                     >
-                        <Button variant="magic" bg="pink.400">
-                           Save
-                        </Button>
-                     </Box>
                      <Box
                         borderWidth="5px"
                         borderColor="pink.800"

@@ -37,6 +37,7 @@ export const Navbar = ({ title, buttons }: Title) => {
                   await apolloClient.resetStore()
                   router.push('/')
                }}
+               isLoading={logoutFetching}
                variant="magic-navbar"
                mr={10}
                mt={6}

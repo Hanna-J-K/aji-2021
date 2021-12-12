@@ -83,6 +83,7 @@ export type Order = {
   orderConfirmedDate?: Maybe<Scalars['String']>;
   orderedProducts: Array<OrderedProduct>;
   orderPlaceDate: Scalars['String'];
+  orderTotal: Scalars['Float'];
   phone: Scalars['String'];
   status: OrderStatus;
   username: Scalars['String'];
@@ -189,7 +190,7 @@ export type QueryUserOrdersArgs = {
 
 export type DefaultErrorFragment = { __typename?: 'FieldError', field: string, message: Array<string> };
 
-export type DefaultOrderFragment = { __typename?: 'Order', id: string, orderPlaceDate: string, orderConfirmedDate?: string | null | undefined, username: string, email: string, phone: string, status: { __typename?: 'OrderStatus', orderStatus: string } };
+export type DefaultOrderFragment = { __typename?: 'Order', id: string, orderPlaceDate: string, orderConfirmedDate?: string | null | undefined, username: string, email: string, phone: string, orderTotal: number, status: { __typename?: 'OrderStatus', orderStatus: string } };
 
 export type DefaultProductFragment = { __typename?: 'Product', id: number, name: string, description: string, unitPrice: number, unitWeight: number, categories: Array<{ __typename?: 'Category', name: string }> };
 
@@ -198,7 +199,7 @@ export type CreateOrderMutationVariables = Exact<{
 }>;
 
 
-export type CreateOrderMutation = { __typename?: 'Mutation', createOrder: { __typename?: 'OrderResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: Array<string> }> | null | undefined, order?: { __typename?: 'Order', id: string, orderPlaceDate: string, orderConfirmedDate?: string | null | undefined, username: string, email: string, phone: string, orderedProducts: Array<{ __typename?: 'OrderedProduct', quantity: number, product_id: number }>, status: { __typename?: 'OrderStatus', orderStatus: string } } | null | undefined } };
+export type CreateOrderMutation = { __typename?: 'Mutation', createOrder: { __typename?: 'OrderResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: Array<string> }> | null | undefined, order?: { __typename?: 'Order', id: string, orderPlaceDate: string, orderConfirmedDate?: string | null | undefined, username: string, email: string, phone: string, orderTotal: number, orderedProducts: Array<{ __typename?: 'OrderedProduct', quantity: number, product_id: number }>, status: { __typename?: 'OrderStatus', orderStatus: string } } | null | undefined } };
 
 export type CreateProductMutationVariables = Exact<{
   input: ProductInput;
@@ -226,7 +227,7 @@ export type UpdateOrderMutationVariables = Exact<{
 }>;
 
 
-export type UpdateOrderMutation = { __typename?: 'Mutation', updateOrder: { __typename?: 'OrderResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: Array<string> }> | null | undefined, order?: { __typename?: 'Order', id: string, orderPlaceDate: string, orderConfirmedDate?: string | null | undefined, username: string, email: string, phone: string, status: { __typename?: 'OrderStatus', orderStatus: string } } | null | undefined } };
+export type UpdateOrderMutation = { __typename?: 'Mutation', updateOrder: { __typename?: 'OrderResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: Array<string> }> | null | undefined, order?: { __typename?: 'Order', id: string, orderPlaceDate: string, orderConfirmedDate?: string | null | undefined, username: string, email: string, phone: string, orderTotal: number, status: { __typename?: 'OrderStatus', orderStatus: string } } | null | undefined } };
 
 export type UpdateProductMutationVariables = Exact<{
   input: ProductInput;
@@ -249,14 +250,14 @@ export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'Admin', id: s
 export type OrdersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type OrdersQuery = { __typename?: 'Query', orders: Array<{ __typename?: 'Order', id: string, orderPlaceDate: string, orderConfirmedDate?: string | null | undefined, username: string, email: string, phone: string, orderedProducts: Array<{ __typename?: 'OrderedProduct', quantity: number, product_id: number }>, status: { __typename?: 'OrderStatus', orderStatus: string } }> };
+export type OrdersQuery = { __typename?: 'Query', orders: Array<{ __typename?: 'Order', id: string, orderPlaceDate: string, orderConfirmedDate?: string | null | undefined, username: string, email: string, phone: string, orderTotal: number, orderedProducts: Array<{ __typename?: 'OrderedProduct', quantity: number, product_id: number }>, status: { __typename?: 'OrderStatus', orderStatus: string } }> };
 
 export type OrdersByStatusQueryVariables = Exact<{
   status: Scalars['String'];
 }>;
 
 
-export type OrdersByStatusQuery = { __typename?: 'Query', ordersByStatus?: Array<{ __typename?: 'Order', id: string, orderPlaceDate: string, orderConfirmedDate?: string | null | undefined, username: string, email: string, phone: string, orderedProducts: Array<{ __typename?: 'OrderedProduct', quantity: number, product_id: number }>, status: { __typename?: 'OrderStatus', orderStatus: string } }> | null | undefined };
+export type OrdersByStatusQuery = { __typename?: 'Query', ordersByStatus?: Array<{ __typename?: 'Order', id: string, orderPlaceDate: string, orderConfirmedDate?: string | null | undefined, username: string, email: string, phone: string, orderTotal: number, orderedProducts: Array<{ __typename?: 'OrderedProduct', quantity: number, product_id: number }>, status: { __typename?: 'OrderStatus', orderStatus: string } }> | null | undefined };
 
 export type ProductsQueryVariables = Exact<{
   limit: Scalars['Int'];
@@ -281,6 +282,7 @@ export const DefaultOrderFragmentDoc = gql`
   username
   email
   phone
+  orderTotal
   status {
     orderStatus
   }

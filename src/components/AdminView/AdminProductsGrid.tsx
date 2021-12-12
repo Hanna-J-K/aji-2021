@@ -10,18 +10,13 @@ import {
 } from '@chakra-ui/react'
 import Card from '../DeckBuilder/Card'
 import AdminProductAddingModal from './AdminProductAddingModal'
-import { useLogoutMutation, useProductsQuery } from '../../generated/graphql'
+import { useProductsQuery } from '../../generated/graphql'
 import React, { useState } from 'react'
-import { useRouter } from 'next/router'
-import { useApolloClient } from '@apollo/client'
 
 const AdminProductsGrid = () => {
    const [phrase, setPhrase] = useState('')
    const [limit, setLimit] = useState(12)
    const [cursor, setCursor] = useState(0)
-   const [logout, { loading: logoutFetching }] = useLogoutMutation()
-   const apolloClient = useApolloClient()
-   const router = useRouter()
 
    const { data, error, loading, fetchMore, variables, refetch } =
       useProductsQuery({
@@ -61,7 +56,6 @@ const AdminProductsGrid = () => {
                   placeholder="filter"
                   variant="magic-navbar"
                   maxW="xs"
-                  loading={logoutFetching}
                   onClick={() => {
                      setCursor(0)
                      refetch()

@@ -83,11 +83,6 @@ export const AdminProductAddingModal: React.FC = () => {
                                           categories: category,
                                        },
                                     },
-                                    update: (cache) => {
-                                       cache.evict({
-                                          fieldName: 'products:{}',
-                                       })
-                                    },
                                  })
                                  if (response.data?.createProduct.errors) {
                                     setErrors(

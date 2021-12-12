@@ -119,10 +119,10 @@ export const AdminProductEditingModal: React.FC<ProductModalProps> = ({
                         validateOnBlur={false}
                         validateOnChange={false}
                         initialValues={{
-                           name: ``,
+                           name: name,
                            unitPrice: unitPrice,
                            unitWeight: unitWeight,
-                           description: ``,
+                           description: description,
                         }}
                         onSubmit={async (values, { setErrors }) => {
                            const response = await updateProductMutation({
@@ -132,11 +132,6 @@ export const AdminProductEditingModal: React.FC<ProductModalProps> = ({
                                     categories: category,
                                  },
                                  updateProductId: id,
-                              },
-                              update: (cache) => {
-                                 cache.evict({
-                                    fieldName: 'products:{}',
-                                 })
                               },
                            })
                            if (response.data?.updateProduct.errors) {

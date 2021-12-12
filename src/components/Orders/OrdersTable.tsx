@@ -1,4 +1,3 @@
-import { DeleteIcon } from '@chakra-ui/icons'
 import {
    Accordion,
    AccordionItem,
@@ -8,7 +7,6 @@ import {
    Box,
    Text,
    Center,
-   IconButton,
    Heading,
    Flex,
 } from '@chakra-ui/react'
@@ -19,29 +17,6 @@ export const OrdersTable: React.FC<{}> = () => {
    const { data } = useOrdersQuery({
       notifyOnNetworkStatusChange: true,
    })
-
-   const placeholderProduct = [
-      {
-         quantity: 15,
-         name: 'blackbear',
-      },
-      {
-         quantity: 2,
-         name: 'joji',
-      },
-      {
-         quantity: 3,
-         name: 'gionni & kyle',
-      },
-      {
-         quantity: 2,
-         name: 'lund',
-      },
-      {
-         quantity: 8,
-         name: 'garret nash',
-      },
-   ]
 
    return (
       <Box>
@@ -68,7 +43,12 @@ export const OrdersTable: React.FC<{}> = () => {
                               <Heading fontSize="lg">
                                  Order ID: {order.id}
                               </Heading>
-                              <Text>Date placed: {order.orderPlaceDate}</Text>
+                              <Text>
+                                 Date placed:{' '}
+                                 {new Date(
+                                    Number(order.orderPlaceDate)
+                                 ).toLocaleString()}
+                              </Text>
                            </Box>
                            <AccordionIcon />
                         </AccordionButton>
@@ -84,10 +64,19 @@ export const OrdersTable: React.FC<{}> = () => {
                         >
                            <Box>
                               <Box>
-                                 {' '}
-                                 Order placement date: {order.orderPlaceDate}
+                                 Order placement date: 
+                                 {new Date(
+                                    Number(order.orderPlaceDate)
+                                 ).toLocaleString()}
                               </Box>
-                              <Box>Order confirmation date: 69-11-4200</Box>
+                              <Box>
+                                 Order confirmation date:{' '}
+                                 {order.orderConfirmedDate
+                                    ? new Date(
+                                         Number(order.orderConfirmedDate)
+                                      ).toLocaleString()
+                                    : 'not confirmed yet'}
+                              </Box>
                               <Box> User: {order.username}</Box>
                               <Box> User e-mail: {order.email}</Box>
                               <Box> User contact phone: {order.phone}</Box>
@@ -97,13 +86,16 @@ export const OrdersTable: React.FC<{}> = () => {
                               <Text fontWeight="semibold">
                                  Products in this order
                               </Text>
-                              {placeholderProduct.map((product) => (
-                                 <Box textAlign="end">
-                                    {product.name}: {product.quantity}
-                                 </Box>
-                              ))}
+                              {data.orders.map((order) =>
+                                 order.orderedProducts.map((orderedProduct) => (
+                                    <Box textAlign="end">
+                                       {orderedProduct.product_id}
+                                       {orderedProduct.quantity}
+                                    </Box>
+                                 ))
+                              )}
                               <Text fontWeight="semibold" textAlign="end">
-                                 Total value: $111
+                                 Total value: {order.orderTotal}$
                               </Text>
                            </Box>
                         </Flex>

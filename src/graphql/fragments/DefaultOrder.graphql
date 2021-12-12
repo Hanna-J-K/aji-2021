@@ -5,6 +5,7 @@ fragment DefaultOrder on Order {
    username
    email
    phone
+   orderTotal
    status {
       orderStatus
    }

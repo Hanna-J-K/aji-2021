@@ -82,18 +82,12 @@ export const PlaceOrderModal: React.FC<PlaceOrderModalProps> = ({
                      }}
                      onSubmit={async (values) => {
                         const products = calculateCart(orderedProducts)
-                        const { errors } = await createOrderMutation({
+                        const response = await createOrderMutation({
                            variables: {
                               input: { ...values, orderedProducts: products },
                            },
-                           update: (cache) => {
-                              cache.evict({
-                                 fieldName: 'orders:{}',
-                              })
-                           },
                         })
-                        if (errors) {
-                           console.log('zle')
+                        if (response.errors) {
                            toast({
                               title: 'Oh no!',
                               description:
@@ -103,7 +97,6 @@ export const PlaceOrderModal: React.FC<PlaceOrderModalProps> = ({
                               isClosable: true,
                            })
                         } else {
-                           console.log('dobrze')
                            toast({
                               title: 'Checkout completed!',
                               description: 'Your order has been placed',
