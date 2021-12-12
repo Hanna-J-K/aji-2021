@@ -95,7 +95,7 @@ export const LoginModal = () => {
                                        variant="magic"
                                        bg="pink.300"
                                     >
-                                       login
+                                       Log In
                                     </Button>
                                  </Form>
                               )}

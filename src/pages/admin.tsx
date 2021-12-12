@@ -19,13 +19,19 @@ const AdminPanel: React.FC<{}> = () => {
    const changePanelToOrders = () => {
       setPanel(3)
    }
+   const changePanelToOrdersFilter = () => {
+      setPanel(4)
+   }
 
    if (panel == 2) {
       adminContent = <AdminProductsGrid />
       navbarTitle = 'Admin Products Panel'
    } else if (panel == 3) {
-      adminContent = <OrdersTable />
+      adminContent = <OrdersTable filter={false} />
       navbarTitle = 'Admin Orders Panel'
+   } else if (panel == 4) {
+      adminContent = <OrdersTable filter={true} />
+      navbarTitle = 'Orders By Status'
    } else {
       adminContent = <></>
       navbarTitle = 'Admin Dashboard'
@@ -44,6 +50,13 @@ const AdminPanel: React.FC<{}> = () => {
             </Button>
             <Button onClick={changePanelToOrders} variant="magic-navbar">
                Orders Panel
+            </Button>
+            <Button
+               m={5}
+               onClick={changePanelToOrdersFilter}
+               variant="magic-navbar"
+            >
+               Orders By Status
             </Button>
          </Center>
          {adminContent}

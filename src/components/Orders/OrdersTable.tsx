@@ -9,14 +9,23 @@ import {
    Center,
    Heading,
    Flex,
+   Menu,
+   MenuItem,
+   MenuList,
+   MenuButton,
+   Button,
 } from '@chakra-ui/react'
+import { ChevronDownIcon } from '@chakra-ui/icons'
 import { useOrdersQuery } from '../../generated/graphql'
 import OrderEditingModal from './OrderEditingModal'
+import { useState } from 'react'
 
-export const OrdersTable: React.FC<{}> = () => {
+export const OrdersTable: React.FC<{ filter: boolean }> = ({ filter }) => {
    const { data } = useOrdersQuery({
       notifyOnNetworkStatusChange: true,
    })
+   const [orderStatus, setOrderStatus] = useState('Filter')
+   const statuses = ['not confirmed', 'confirmed', 'cancelled', 'completed']
 
    return (
       <Box>
@@ -24,6 +33,41 @@ export const OrdersTable: React.FC<{}> = () => {
             <Text>Click on an order to expand for more information.</Text>
             <Text>Edit or delete orders using buttons.</Text>
          </Box>
+
+         {filter && (
+            <Center>
+               <Menu>
+                  <MenuButton
+                     as={Button}
+                     variant="magic"
+                     rightIcon={<ChevronDownIcon />}
+                  >
+                     {orderStatus}
+                  </MenuButton>
+                  <MenuList
+                     bg="blue.500"
+                     color="black"
+                     borderRadius="xl"
+                     onChange={filterOrders}
+                  >
+                     {statuses.map((stat) =>
+                        !stat ? null : (
+                           <MenuItem
+                              key={stat}
+                              _hover={{
+                                 backgroundColor: 'pink.500',
+                                 color: 'white',
+                              }}
+                              onClick={() => setOrderStatus(stat)}
+                           >
+                              {stat}
+                           </MenuItem>
+                        )
+                     )}
+                  </MenuList>
+               </Menu>
+            </Center>
+         )}
          <Accordion
             borderWidth="4px"
             borderRadius="lg"
@@ -64,7 +108,7 @@ export const OrdersTable: React.FC<{}> = () => {
                         >
                            <Box>
                               <Box>
-                                 Order placement date: 
+                                 Order placement date:
                                  {new Date(
                                     Number(order.orderPlaceDate)
                                  ).toLocaleString()}
@@ -88,14 +132,22 @@ export const OrdersTable: React.FC<{}> = () => {
                               </Text>
                               {data.orders.map((order) =>
                                  order.orderedProducts.map((orderedProduct) => (
-                                    <Box textAlign="end">
-                                       {orderedProduct.product_id}
-                                       {orderedProduct.quantity}
-                                    </Box>
+                                    <Flex
+                                       textAlign="end"
+                                       justifyContent="flex-end"
+                                    >
+                                       <Text>
+                                          ID: {orderedProduct.product_id} -
+                                       </Text>
+                                       <Text>
+                                          {' '}
+                                          - Qty: {orderedProduct.quantity}
+                                       </Text>
+                                    </Flex>
                                  ))
                               )}
                               <Text fontWeight="semibold" textAlign="end">
-                                 Total value: {order.orderTotal}$
+                                 Total value: ${order.orderTotal}
                               </Text>
                            </Box>
                         </Flex>
