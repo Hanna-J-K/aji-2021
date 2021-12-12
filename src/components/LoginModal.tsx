@@ -23,7 +23,6 @@ export const LoginModal = () => {
    const { isOpen, onOpen, onClose } = useDisclosure()
    const router = useRouter()
    const [login] = useLoginMutation()
-   let failed = false
 
    const bgImg =
       "url('https://images.unsplash.com/photo-1530362502708-d02c8f093039?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80')"
@@ -70,7 +69,7 @@ export const LoginModal = () => {
                                  if (!response.data?.login.error) {
                                     router.push('/admin')
                                  } else {
-                                    failed = true
+                                    console.log('error')
                                  }
                               }}
                            >
