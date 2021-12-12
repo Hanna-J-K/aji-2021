@@ -31,7 +31,6 @@ const AdminProductsGrid = () => {
 
    return (
       <Container maxW="none" p={3}>
-         <Navbar title="Admin Products Panel" buttons={false} />
          <Box mx={20} fontSize="2xl">
             <Text>Add new products when needed.</Text>
             <Text>Edit or delete products using buttons.</Text>
