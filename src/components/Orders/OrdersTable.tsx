@@ -86,24 +86,22 @@ export const OrdersTable: React.FC<{}> = () => {
                               <Text fontWeight="semibold">
                                  Products in this order
                               </Text>
-                              {data.orders.map((order) =>
-                                 order.orderedProducts.map((orderedProduct) => (
-                                    <Flex
-                                       textAlign="end"
-                                       justifyContent="flex-end"
-                                    >
-                                       <Text>
-                                          ID: {orderedProduct.product_id} -
-                                       </Text>
-                                       <Text>
-                                          {' '}
-                                          - Qty: {orderedProduct.quantity}
-                                       </Text>
-                                    </Flex>
-                                 ))
-                              )}
+                              {order.orderedProducts.map((orderedProduct) => (
+                                 <Flex
+                                    textAlign="end"
+                                    justifyContent="flex-end"
+                                 >
+                                    <Text>
+                                       ID: {orderedProduct.product_id} -
+                                    </Text>
+                                    <Text>
+                                       {' '}
+                                       - Qty: {orderedProduct.quantity}
+                                    </Text>
+                                 </Flex>
+                              ))}
                               <Text fontWeight="semibold" textAlign="end">
-                                 Total value: ${order.orderTotal}
+                                 Total value: ${order.orderTotal.toFixed(2)}
                               </Text>
                            </Box>
                         </Flex>

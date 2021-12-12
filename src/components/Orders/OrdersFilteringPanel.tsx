@@ -16,16 +16,18 @@ import {
    Button,
 } from '@chakra-ui/react'
 import { ChevronDownIcon } from '@chakra-ui/icons'
-import { useOrdersQuery } from '../../generated/graphql'
-import OrderEditingModal from './OrderEditingModal'
+import { useOrdersByStatusQuery } from '../../generated/graphql'
 import { useState } from 'react'
 
-export const OrdersFilteringPanel: React.FC<{}> = ({ filter }) => {
-   const { data } = useOrdersQuery({
-      notifyOnNetworkStatusChange: true,
-   })
+export const OrdersFilteringPanel: React.FC<{}> = () => {
    const [orderStatus, setOrderStatus] = useState('Filter')
    const statuses = ['not confirmed', 'confirmed', 'cancelled', 'completed']
+   const { data } = useOrdersByStatusQuery({
+      notifyOnNetworkStatusChange: true,
+      variables: {
+         status: `${statuses.indexOf(orderStatus) + 1}`,
+      },
+   })
 
    return (
       <Box>
@@ -72,7 +74,7 @@ export const OrdersFilteringPanel: React.FC<{}> = ({ filter }) => {
             defaultIndex={[0]}
             allowMultiple
          >
-            {data?.orders.map((order) =>
+            {data?.ordersByStatus?.map((order) =>
                !order ? null : (
                   <AccordionItem bg="gray.900" key={order.id}>
                      <h2>
@@ -124,40 +126,25 @@ export const OrdersFilteringPanel: React.FC<{}> = ({ filter }) => {
                               <Text fontWeight="semibold">
                                  Products in this order
                               </Text>
-                              {data.orders.map((order) =>
-                                 order.orderedProducts.map((orderedProduct) => (
-                                    <Flex
-                                       textAlign="end"
-                                       justifyContent="flex-end"
-                                    >
-                                       <Text>
-                                          ID: {orderedProduct.product_id} -
-                                       </Text>
-                                       <Text>
-                                          {' '}
-                                          - Qty: {orderedProduct.quantity}
-                                       </Text>
-                                    </Flex>
-                                 ))
-                              )}
+                              {order.orderedProducts.map((orderedProduct) => (
+                                 <Flex
+                                    textAlign="end"
+                                    justifyContent="flex-end"
+                                 >
+                                    <Text>
+                                       ID: {orderedProduct.product_id} -
+                                    </Text>
+                                    <Text>
+                                       {' '}
+                                       - Qty: {orderedProduct.quantity}
+                                    </Text>
+                                 </Flex>
+                              ))}
                               <Text fontWeight="semibold" textAlign="end">
-                                 Total value: ${order.orderTotal}
+                                 Total value: ${order.orderTotal.toFixed(2)}
                               </Text>
                            </Box>
                         </Flex>
-
-                        <Center>
-                           <OrderEditingModal
-                              id={order.id}
-                              orderPlaceDate={order.orderPlaceDate}
-                              username={order.username}
-                              email={order.email}
-                              phone={order.phone}
-                              status={order.status.orderStatus}
-                              orderConfirmedDate={order.orderConfirmedDate}
-                              orderProducts={order.orderedProducts}
-                           />
-                        </Center>
                      </AccordionPanel>
                   </AccordionItem>
                )
