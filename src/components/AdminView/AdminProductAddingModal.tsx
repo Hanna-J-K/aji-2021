@@ -163,7 +163,7 @@ export const AdminProductAddingModal: React.FC = () => {
                                           )}
                                        </MenuList>
                                     </Menu>
-                                    <Center>
+                                    <Flex justifyContent="space-between">
                                        <Button
                                           mt={4}
                                           variant="magic"
@@ -181,7 +181,7 @@ export const AdminProductAddingModal: React.FC = () => {
                                        >
                                           Close
                                        </Button>
-                                    </Center>
+                                    </Flex>
                                  </Form>
                               )}
                            </Formik>
