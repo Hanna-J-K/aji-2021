@@ -13,6 +13,7 @@ import {
    Center,
    Image,
    Text,
+   createStandaloneToast,
 } from '@chakra-ui/react'
 import { Product } from '../../types/ProductType'
 import { Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react'
@@ -36,6 +37,7 @@ export const AdminProductEditingModal: React.FC<ProductModalProps> = ({
    const { id, name, description, unitPrice, unitWeight, categories } = product
    const categoriesQueryResult = useCategoryQuery()
    const [updateProductMutation] = useUpdateProductMutation()
+   const toast = createStandaloneToast()
 
    let categoryName = categories[0] ? categories[0].name : 'Category'
    const [category, setCategory] = useState(categoryName)
@@ -144,6 +146,13 @@ export const AdminProductEditingModal: React.FC<ProductModalProps> = ({
                            } else {
                               //TODO: RESPONSE POWIODLO SIE DODANIE PRODUKTU
                               // ZAMKNIJ MODAL
+                              toast({
+                                 title: 'Success!',
+                                 description: 'Product added to stock.',
+                                 status: 'success',
+                                 duration: 7000,
+                                 isClosable: true,
+                              })
                               console.log('dobrze')
                            }
                         }}

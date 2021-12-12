@@ -1,5 +1,6 @@
 import {
    Button,
+   createStandaloneToast,
    Modal,
    ModalBody,
    ModalCloseButton,
@@ -31,6 +32,7 @@ export const PlaceOrderModal: React.FC<PlaceOrderModalProps> = ({
    const [createOrderMutation] = useCreateOrderMutation()
    const { isOpen, onOpen, onClose } = useDisclosure()
    const initialRef = React.useRef()
+   const toast = createStandaloneToast()
 
    const calculateCart = (orderedProducts: CartItemType[]) => {
       let productsToOrder: OrderedProduct[] = []
@@ -92,8 +94,23 @@ export const PlaceOrderModal: React.FC<PlaceOrderModalProps> = ({
                         })
                         if (errors) {
                            console.log('zle')
+                           toast({
+                              title: 'Oh no!',
+                              description:
+                                 'Something went wrong. Did you enter correct contact information?',
+                              status: 'error',
+                              duration: 7000,
+                              isClosable: true,
+                           })
                         } else {
                            console.log('dobrze')
+                           toast({
+                              title: 'Checkout completed!',
+                              description: 'Your order has been placed',
+                              status: 'success',
+                              duration: 7000,
+                              isClosable: true,
+                           })
                         }
                      }}
                   >

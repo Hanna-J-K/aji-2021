@@ -63,17 +63,6 @@ export const Card: React.FC<CardProps> = ({ product, addToCart, view }) => {
             <Center mt={6}>
                <AdminProductEditingModal product={product} />
             </Center>
-            <Center>
-               <Box
-                  borderWidth="5px"
-                  borderColor="pink.800"
-                  borderRadius="xl"
-                  bg="pink.300"
-                  mt={2}
-               >
-                  <Button variant="magic">Delete from stock</Button>
-               </Box>
-            </Center>
          </>
       )
    }
