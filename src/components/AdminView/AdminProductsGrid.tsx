@@ -61,6 +61,7 @@ const AdminProductsGrid = () => {
                   placeholder="filter"
                   variant="magic-navbar"
                   maxW="xs"
+                  loading={logoutFetching}
                   onClick={() => {
                      setCursor(0)
                      refetch()

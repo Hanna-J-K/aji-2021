@@ -1,4 +1,4 @@
-import { EditIcon, DeleteIcon } from '@chakra-ui/icons'
+import { DeleteIcon } from '@chakra-ui/icons'
 import {
    Accordion,
    AccordionItem,
@@ -13,9 +13,7 @@ import {
    Flex,
 } from '@chakra-ui/react'
 import { useOrdersQuery } from '../../generated/graphql'
-
 import OrderEditingModal from './OrderEditingModal'
-import { Navbar } from '../Navbar'
 
 export const OrdersTable: React.FC<{}> = () => {
    const { data } = useOrdersQuery({
@@ -95,28 +93,11 @@ export const OrdersTable: React.FC<{}> = () => {
                               <Box> User contact phone: {order.phone}</Box>
                               <Box fontWeight="semibold">Order status:</Box>
                            </Box>
-                           <Box
-                              borderRadius="lg"
-                              boxShadow="0 1px 3px 0 #ffffff"
-                              px={5}
-                              py={3}
-                              color="white"
-                              bg="gray.800"
-                              minW="30%"
-                              textAlign="end"
-                              mt={-1}
-                           >
-                              <Text fontWeight="semibold" textAlign="center">
-                                 Products in this order
-                              </Text>
-                              {placeholderProduct.map((product) => (
-                                 <Box mb={1}>
-                                    {product.name}: {product.quantity}
-                                 </Box>
-                              ))}
-                              <Box fontWeight="semibold" textAlign="center">
-                                 Total value: 987
-                              </Box>
+                           <Box> User: {order.username}</Box>
+                           <Box> User e-mail: {order.email}</Box>
+                           <Box> User contact phone: {order.phone}</Box>
+                           <Box fontWeight="semibold">
+                              Order status: "{order.status.orderStatus}"
                            </Box>
                         </Flex>
 
