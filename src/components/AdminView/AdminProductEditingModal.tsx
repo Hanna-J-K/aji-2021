@@ -20,8 +20,9 @@ import {
 } from '@chakra-ui/react'
 import { Product } from '../../types/ProductType'
 import { Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react'
-
-import { EditIcon, ChevronDownIcon } from '@chakra-ui/icons'
+import { ChevronDownIcon } from '@chakra-ui/icons'
+import { useCategoryQuery } from '../../generated/graphql'
+import { useState } from 'react'
 
 interface ProductModalProps {
    product: Product
@@ -30,6 +31,8 @@ interface ProductModalProps {
 export const AdminProductEditingModal: React.FC<ProductModalProps> = ({
    product,
 }) => {
+   const categoriesQueryResult = useCategoryQuery()
+   const [category, setCategory] = useState('')
    const productImage = {
       imageUrl: 'https://via.placeholder.com/570x300',
       imageAlt: 'Kill this love',
@@ -96,7 +99,8 @@ export const AdminProductEditingModal: React.FC<ProductModalProps> = ({
                         <Box> Weight: {unitWeight} </Box>
                         <Box fontWeight="semibold">
                            {' '}
-                           Categories: {categories}{' '}
+                           Categories:{' '}
+                           {categories.map((category) => category.name)}{' '}
                         </Box>
                         <Box fontWeight="semibold">
                            <Text> Product description: </Text>
@@ -119,7 +123,7 @@ export const AdminProductEditingModal: React.FC<ProductModalProps> = ({
                               size="xl"
                               bg="none"
                            />
-                           <Input placeholder={unitWeight} />
+                           <Input placeholder={unitWeight.toString()} />
                         </InputGroup>
                         <InputGroup>
                            <InputLeftAddon
@@ -133,69 +137,31 @@ export const AdminProductEditingModal: React.FC<ProductModalProps> = ({
                                  variant="outline"
                                  rightIcon={<ChevronDownIcon />}
                               >
-                                 {categories}
+                                 {category}
                               </MenuButton>
                               <MenuList
                                  bg="blue.500"
                                  color="black"
                                  borderRadius="xl"
+                                 placeholder="e"
                               >
-                                 <MenuItem
-                                    _hover={{
-                                       backgroundColor: 'pink.500',
-                                       color: 'white',
-                                    }}
-                                 >
-                                    Ingredients
-                                 </MenuItem>
-                                 <MenuItem
-                                    _hover={{
-                                       backgroundColor: 'pink.500',
-                                       color: 'white',
-                                    }}
-                                 >
-                                    Equipment
-                                 </MenuItem>
-                                 <MenuItem
-                                    _hover={{
-                                       backgroundColor: 'pink.500',
-                                       color: 'white',
-                                    }}
-                                 >
-                                    Clothing
-                                 </MenuItem>
-                                 <MenuItem
-                                    _hover={{
-                                       backgroundColor: 'pink.500',
-                                       color: 'white',
-                                    }}
-                                 >
-                                    Materials
-                                 </MenuItem>
-                                 <MenuItem
-                                    _hover={{
-                                       backgroundColor: 'pink.500',
-                                       color: 'white',
-                                    }}
-                                 >
-                                    Collectibles
-                                 </MenuItem>
-                                 <MenuItem
-                                    _hover={{
-                                       backgroundColor: 'pink.500',
-                                       color: 'white',
-                                    }}
-                                 >
-                                    Perishable
-                                 </MenuItem>
-                                 <MenuItem
-                                    _hover={{
-                                       backgroundColor: 'pink.500',
-                                       color: 'white',
-                                    }}
-                                 >
-                                    Non-perishable
-                                 </MenuItem>
+                                 {categoriesQueryResult.data?.category.map(
+                                    (category) =>
+                                       !category ? null : (
+                                          <MenuItem
+                                             key={category.name}
+                                             _hover={{
+                                                backgroundColor: 'pink.500',
+                                                color: 'white',
+                                             }}
+                                             onClick={() =>
+                                                setCategory(category.name)
+                                             }
+                                          >
+                                             {category.name}
+                                          </MenuItem>
+                                       )
+                                 )}
                               </MenuList>
                            </Menu>
                         </InputGroup>
@@ -213,15 +179,7 @@ export const AdminProductEditingModal: React.FC<ProductModalProps> = ({
                               size="xl"
                               bg="none"
                            />
-                           <Input placeholder={unitPrice} />
-                        </InputGroup>
-                        <InputGroup>
-                           <InputLeftAddon
-                              children="Image"
-                              size="xl"
-                              bg="none"
-                           />
-                           <Input placeholder="URL" />
+                           <Input placeholder={unitPrice.toString()} />
                         </InputGroup>
                      </Stack>
                   </ModalBody>

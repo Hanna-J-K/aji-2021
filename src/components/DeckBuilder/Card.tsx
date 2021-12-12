@@ -7,7 +7,7 @@ import { AdminProductEditingModal } from '../AdminView/AdminProductEditingModal'
 
 interface CardProps {
    product: Product
-   addToCart: (clickedItem: CartItemType) => void
+   addToCart?: (clickedItem: CartItemType) => void
    view: Boolean
 }
 
@@ -39,7 +39,7 @@ export const Card: React.FC<CardProps> = ({ product, addToCart, view }) => {
             >
                <Button
                   onClick={() => {
-                     addToCart({
+                     addToCart!({
                         id: product.id,
                         name: product.name,
                         unitPrice: product.unitPrice,
@@ -176,7 +176,7 @@ export const Card: React.FC<CardProps> = ({ product, addToCart, view }) => {
                      fontWeight="semibold"
                      textAlign="center"
                   >
-                     {categories}
+                     {categories.map((category) => category.name)}
                   </Text>
 
                   {buttons}

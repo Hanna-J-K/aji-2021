@@ -79,7 +79,7 @@ const AdminProductsGrid = () => {
                <Button
                   variant="magic-navbar"
                   onClick={() => {
-                     setCursor(cursor + 12)
+                     setCursor(cursor + limit)
                      fetchMore({
                         variables: {
                            limit,

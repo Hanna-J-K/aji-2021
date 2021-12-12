@@ -12,16 +12,23 @@ import {
    Flex,
    Center,
    Stack,
-   Input,
 } from '@chakra-ui/react'
 import { Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react'
+import { ChevronDownIcon } from '@chakra-ui/icons'
+import { useState } from 'react'
+import {
+   useCategoryQuery,
+   useCreateProductMutation,
+} from '../../generated/graphql'
+import { Form, Formik } from 'formik'
+import { InputField } from '../InputField'
+import { toErrorMap } from '../../utils/toErrorMap'
 
-import { EditIcon, ChevronDownIcon } from '@chakra-ui/icons'
-
-import Link from 'next/link'
-
-export const LoginModal = () => {
+export const AdminProductAddingModal: React.FC = () => {
    const { isOpen, onOpen, onClose } = useDisclosure()
+   const [category, setCategory] = useState('Category')
+   const categoriesQueryResult = useCategoryQuery()
+   const [createProductMutation] = useCreateProductMutation()
 
    const bgImg =
       "url('https://images.unsplash.com/photo-1530362502708-d02c8f093039?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80')"
@@ -59,81 +66,110 @@ export const LoginModal = () => {
                   <ModalBody>
                      <Center my={5}>
                         <Stack spacing={3}>
-                           <Input placeholder="Name" size="lg" />
-                           <Input placeholder="Price" size="lg" />
-                           <Input placeholder="Weight" size="lg" />
-                           <Input placeholder="Image URL" size="lg" />
-                           <Menu>
-                              <MenuButton
-                                 as={Button}
-                                 variant="magic"
-                                 rightIcon={<ChevronDownIcon />}
-                              >
-                                 Category
-                              </MenuButton>
-                              <MenuList
-                                 bg="blue.500"
-                                 color="black"
-                                 borderRadius="xl"
-                              >
-                                 <MenuItem
-                                    _hover={{
-                                       backgroundColor: 'pink.500',
-                                       color: 'white',
-                                    }}
-                                 >
-                                    Ingredients
-                                 </MenuItem>
-                                 <MenuItem
-                                    _hover={{
-                                       backgroundColor: 'pink.500',
-                                       color: 'white',
-                                    }}
-                                 >
-                                    Equipment
-                                 </MenuItem>
-                                 <MenuItem
-                                    _hover={{
-                                       backgroundColor: 'pink.500',
-                                       color: 'white',
-                                    }}
-                                 >
-                                    Clothing
-                                 </MenuItem>
-                                 <MenuItem
-                                    _hover={{
-                                       backgroundColor: 'pink.500',
-                                       color: 'white',
-                                    }}
-                                 >
-                                    Materials
-                                 </MenuItem>
-                                 <MenuItem
-                                    _hover={{
-                                       backgroundColor: 'pink.500',
-                                       color: 'white',
-                                    }}
-                                 >
-                                    Collectibles
-                                 </MenuItem>
-                                 <MenuItem
-                                    _hover={{
-                                       backgroundColor: 'pink.500',
-                                       color: 'white',
-                                    }}
-                                 >
-                                    Perishable
-                                 </MenuItem>
-                                 <MenuItem
-                                    _hover={{
-                                       backgroundColor: 'pink.500',
-                                       color: 'white',
-                                    }}
-                                 >
-                                    Non-perishable
-                                 </MenuItem>
-                              </MenuList>
-                           </Menu>
+                           <Formik
+                              validateOnBlur={false}
+                              validateOnChange={false}
+                              initialValues={{
+                                 name: ``,
+                                 unitPrice: 0.00,
+                                 unitWeight: 0.00,
+                                 description: ``,
+                              }}
+                              onSubmit={async (values, { setErrors }) => {
+                                 const response = await createProductMutation(
+                                    {
+                                       variables: {
+                                          input: {...values, categories: category}
+                                       },
+                                       update: (cache) => {
+                                          cache.evict({
+                                             fieldName: 'products:{}',
+                                          })
+                                       },
+                                    }
+                                 )
+                                 if (response.data?.createProduct.errors) {
+                                    setErrors(toErrorMap(response.data.createProduct.errors))
+                                 } else {
+                                    //TODO: RESPONSE POWIODLO SIE DODANIE PRODUKTU
+                                    // ZAMKNIJ MODAL
+                                    console.log('dobrze')
+                                 }
+                              }}
+                           >
+                              {({ isSubmitting }) => (
+                                 <Form>
+                                    <InputField
+                                       name="name"
+                                       placeholder=""
+                                       label="Name"
+                                    />
+                                    <InputField
+                                       name="unitPrice"
+                                       placeholder=""
+                                       label="Price"
+                                       type="number"
+                                    />
+                                    <InputField
+                                       name="unitWeight"
+                                       placeholder=""
+                                       label="Weight"
+                                       type="number"
+                                    />
+                                    <InputField
+                                       name="description"
+                                       placeholder=""
+                                       label="Description"
+                                    />
+                                    <Menu>
+                                       <MenuButton
+                                          mt={3}
+                                          as={Button}
+                                          variant="magic"
+                                          rightIcon={<ChevronDownIcon />}
+                                       >
+                                          {category}
+                                       </MenuButton>
+                                       <MenuList
+                                          bg="blue.500"
+                                          color="black"
+                                          borderRadius="xl"
+                                       >
+                                          {categoriesQueryResult.data?.category.map(
+                                             (category) =>
+                                                !category ? null : (
+                                                   <MenuItem
+                                                   key={category.name}
+                                                      _hover={{
+                                                         backgroundColor:
+                                                            'pink.500',
+                                                         color: 'white',
+                                                      }}
+                                                      onClick={() =>
+                                                         setCategory(
+                                                            category.name
+                                                         )
+                                                      }
+                                                   >
+                                                      {category.name}
+                                                   </MenuItem>
+                                                )
+                                          )}
+                                       </MenuList>
+                                    </Menu>
+                                    <Center>
+                                       <Button
+                                          mt={4}
+                                          variant="magic"
+                                          isLoading={isSubmitting}
+                                          type="submit"
+                                       >
+                                          Add product
+                                       </Button>
+                                    </Center>
+                                 </Form>
+                              )}
+                           </Formik>
                         </Stack>
                      </Center>
                   </ModalBody>
@@ -150,18 +186,6 @@ export const LoginModal = () => {
                            Close
                         </Button>
                      </Box>
-                     <Box
-                        borderWidth="5px"
-                        borderColor="pink.800"
-                        borderRadius="xl"
-                        bg="pink.300"
-                     >
-                        <Link href="/Orders/OrdersTable">
-                           <Button variant="magic" bg="pink.300">
-                              <a>Add</a>
-                           </Button>
-                        </Link>
-                     </Box>
                   </ModalFooter>
                </Flex>
             </ModalContent>
@@ -170,4 +194,4 @@ export const LoginModal = () => {
    )
 }
 
-export default LoginModal
+export default AdminProductAddingModal

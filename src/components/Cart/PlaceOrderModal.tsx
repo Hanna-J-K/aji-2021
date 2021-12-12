@@ -19,7 +19,7 @@ import {
    validatePhone,
    validateUsername,
 } from '../../utils/orderInputValidation'
-import { InputField } from './InputField'
+import { InputField } from '../InputField'
 
 interface PlaceOrderModalProps {
    orderedProducts: CartItemType[]

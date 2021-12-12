@@ -83,7 +83,8 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product }) => {
                         <Box> Weight: {unitWeight} </Box>
                         <Box fontWeight="semibold">
                            {' '}
-                           Categories: {categories}{' '}
+                           Categories:{' '}
+                           {categories.map((category) => category.name)}{' '}
                         </Box>
                         <Box fontWeight="semibold">
                            <Text> Product description: </Text>

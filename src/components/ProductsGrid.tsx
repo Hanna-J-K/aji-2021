@@ -11,8 +11,6 @@ import { useProductsQuery } from '../generated/graphql'
 import React, { useContext, useState } from 'react'
 import CartContext from '../contexts/CartContext'
 import { CartItemType } from '../types/CartItemType'
-import { OrdersTable } from './Orders/OrdersTable'
-import AdminProductsGrid from './AdminView/AdminProductsGrid'
 
 const ProductsGrid = () => {
    const [_, setCartItems] = useContext(CartContext)
@@ -72,9 +70,6 @@ const ProductsGrid = () => {
                </Button>
             </Flex>
          </Center>
-
-         <AdminProductsGrid />
-         <OrdersTable />
 
          <SimpleGrid columns={4} spacing={2}>
             {data?.products.products.map((product) =>
