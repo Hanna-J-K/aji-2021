@@ -98,6 +98,7 @@ export const AdminProductAddingModal: React.FC = () => {
                                  } else {
                                     //TODO: RESPONSE POWIODLO SIE DODANIE PRODUKTU
                                     // ZAMKNIJ MODAL
+                                    onClose()
                                     console.log('dobrze')
                                  }
                               }}

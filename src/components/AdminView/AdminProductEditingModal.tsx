@@ -214,7 +214,7 @@ export const AdminProductEditingModal: React.FC<ProductModalProps> = ({
                                     )}
                                  </MenuList>
                               </Menu>
-                              <Center>
+                              <Flex justifyContent="space-between">
                                  <Button
                                     mt={4}
                                     variant="magic"
@@ -223,25 +223,21 @@ export const AdminProductEditingModal: React.FC<ProductModalProps> = ({
                                  >
                                     Update product
                                  </Button>
-                              </Center>
+                                 <Button
+                                    onClick={onClose}
+                                    variant="magic"
+                                    bg="pink.400"
+                                    mt={4}
+                                 >
+                                    Close
+                                 </Button>
+                              </Flex>
                            </Form>
                         )}
                      </Formik>
                   </ModalBody>
 
-                  <ModalFooter>
-                     <Box
-                        borderWidth="5px"
-                        borderColor="pink.800"
-                        borderRadius="xl"
-                        bg="pink.300"
-                        mr={3}
-                     >
-                        <Button onClick={onClose} variant="magic" bg="pink.400">
-                           Close
-                        </Button>
-                     </Box>
-                  </ModalFooter>
+                  <ModalFooter />
                </Flex>
             </ModalContent>
          </Modal>
