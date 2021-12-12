@@ -11,13 +11,18 @@ import {
 import Card from '../DeckBuilder/Card'
 import AdminProductAddingModal from './AdminProductAddingModal'
 import { Navbar } from '../Navbar'
-import { useProductsQuery } from '../../generated/graphql'
+import { useLogoutMutation, useProductsQuery } from '../../generated/graphql'
 import React, { useState } from 'react'
+import { useRouter } from 'next/router'
+import { useApolloClient } from '@apollo/client'
 
 const AdminProductsGrid = () => {
    const [phrase, setPhrase] = useState('')
    const [limit, setLimit] = useState(12)
    const [cursor, setCursor] = useState(0)
+   const [logout, { loading: logoutFetching }] = useLogoutMutation()
+   const apolloClient = useApolloClient()
+   const router = useRouter()
 
    const { data, error, loading, fetchMore, variables, refetch } =
       useProductsQuery({
@@ -32,6 +37,17 @@ const AdminProductsGrid = () => {
    return (
       <Container maxW="none" p={3}>
          <Navbar title="Admin Products Panel" buttons={false} />
+         <Button
+            //TODO: do ostylowania
+            onClick={async () => {
+               await logout()
+               await apolloClient.resetStore()
+               router.push('/')
+            }}
+            isLoading={logoutFetching}
+         >
+            Logout
+         </Button>
          <Box mx={20} fontSize="2xl">
             <Text>Add new products when needed.</Text>
             <Text>Edit or delete products using buttons.</Text>

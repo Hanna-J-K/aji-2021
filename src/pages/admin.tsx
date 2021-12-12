@@ -1,7 +1,9 @@
 import AdminProductsGrid from '../components/AdminView/AdminProductsGrid'
 import { withApollo } from '../utils/withApollo'
+import { useIsAuth } from '../utils/useIsAuth'
 
-const AdminPanel = () => {
+const AdminPanel: React.FC<{}> = () => {
+   useIsAuth()
    return (
       <>
          <AdminProductsGrid />
