@@ -171,6 +171,15 @@ export const AdminProductAddingModal: React.FC = () => {
                                        >
                                           Add product
                                        </Button>
+                                       <Button
+                                          onClick={onClose}
+                                          variant="magic"
+                                          bg="pink.400"
+                                          ml={8}
+                                          mt={4}
+                                       >
+                                          Close
+                                       </Button>
                                     </Center>
                                  </Form>
                               )}
@@ -179,19 +188,7 @@ export const AdminProductAddingModal: React.FC = () => {
                      </Center>
                   </ModalBody>
 
-                  <ModalFooter>
-                     <Box
-                        borderWidth="5px"
-                        borderColor="pink.800"
-                        borderRadius="xl"
-                        bg="pink.300"
-                        mr={3}
-                     >
-                        <Button onClick={onClose} variant="magic" bg="pink.400">
-                           Close
-                        </Button>
-                     </Box>
-                  </ModalFooter>
+                  <ModalFooter></ModalFooter>
                </Flex>
             </ModalContent>
          </Modal>

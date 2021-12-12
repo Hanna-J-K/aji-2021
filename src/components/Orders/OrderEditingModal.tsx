@@ -131,7 +131,7 @@ function OrderEditingModal(props: Order) {
                         bg="pink.300"
                         mr={3}
                      >
-                        <Button onClick={onClose} variant="magic" bg="pink.400">
+                        <Button variant="magic" bg="pink.400">
                            Save
                         </Button>
                      </Box>
@@ -141,7 +141,12 @@ function OrderEditingModal(props: Order) {
                         borderRadius="xl"
                         bg="pink.300"
                      >
-                        <Button variant="magic" bg="pink.200" color="black">
+                        <Button
+                           onClick={onClose}
+                           variant="magic"
+                           bg="pink.200"
+                           color="black"
+                        >
                            Cancel
                         </Button>
                      </Box>

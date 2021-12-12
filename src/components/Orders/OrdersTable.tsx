@@ -10,6 +10,7 @@ import {
    Center,
    IconButton,
    Heading,
+   Flex,
 } from '@chakra-ui/react'
 import { useOrdersQuery } from '../../generated/graphql'
 
@@ -20,6 +21,29 @@ export const OrdersTable: React.FC<{}> = () => {
    const { data } = useOrdersQuery({
       notifyOnNetworkStatusChange: true,
    })
+
+   const placeholderProduct = [
+      {
+         quantity: 15,
+         name: 'blackbear',
+      },
+      {
+         quantity: 2,
+         name: 'joji',
+      },
+      {
+         quantity: 3,
+         name: 'gionni & kyle',
+      },
+      {
+         quantity: 2,
+         name: 'lund',
+      },
+      {
+         quantity: 8,
+         name: 'garret nash',
+      },
+   ]
 
    return (
       <Box>
@@ -52,7 +76,8 @@ export const OrdersTable: React.FC<{}> = () => {
                         </AccordionButton>
                      </h2>
                      <AccordionPanel pb={4}>
-                        <Box
+                        <Flex
+                           justifyContent="space-between"
                            borderRadius="lg"
                            boxShadow="0 1px 3px 0 #ffffff"
                            p={5}
@@ -60,17 +85,41 @@ export const OrdersTable: React.FC<{}> = () => {
                            bg="gray.800"
                         >
                            <Box>
-                              {' '}
-                              Order placement date: {order.orderPlaceDate}
+                              <Box>
+                                 {' '}
+                                 Order placement date: {order.orderPlaceDate}
+                              </Box>
+                              <Box>Order confirmation date: 69-11-4200</Box>
+                              <Box> User: {order.username}</Box>
+                              <Box> User e-mail: {order.email}</Box>
+                              <Box> User contact phone: {order.phone}</Box>
+                              <Box fontWeight="semibold">Order status:</Box>
                            </Box>
-                           <Box> User: {order.username}</Box>
-                           <Box> User e-mail: {order.email}</Box>
-                           <Box> User contact phone: {order.phone}</Box>
-                           <Box fontWeight="semibold">
-                              Order status: "great"
-                              {/* Order status: "{order.status.orderStatus}" */}
+                           <Box
+                              borderRadius="lg"
+                              boxShadow="0 1px 3px 0 #ffffff"
+                              px={5}
+                              py={3}
+                              color="white"
+                              bg="gray.800"
+                              minW="30%"
+                              textAlign="end"
+                              mt={-1}
+                           >
+                              <Text fontWeight="semibold" textAlign="center">
+                                 Products in this order
+                              </Text>
+                              {placeholderProduct.map((product) => (
+                                 <Box mb={1}>
+                                    {product.name}: {product.quantity}
+                                 </Box>
+                              ))}
+                              <Box fontWeight="semibold" textAlign="center">
+                                 Total value: 987
+                              </Box>
                            </Box>
-                        </Box>
+                        </Flex>
+
                         <Center>
                            <OrderEditingModal
                               id={order.id}
@@ -81,13 +130,6 @@ export const OrdersTable: React.FC<{}> = () => {
                               status={order.status.orderStatus}
                               orderConfirmedDate={order.orderConfirmedDate}
                               orderProducts={order.orderedProducts}
-                           />
-                           <IconButton
-                              variant="magic"
-                              m={5}
-                              color="red.800"
-                              aria-label="edit"
-                              icon={<DeleteIcon />}
                            />
                         </Center>
                      </AccordionPanel>
