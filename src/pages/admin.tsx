@@ -5,6 +5,7 @@ import { Navbar } from '../components/Navbar'
 import { Button, Center } from '@chakra-ui/react'
 import { OrdersTable } from '../components/Orders/OrdersTable'
 import { useIsAuth } from '../utils/useIsAuth'
+import { OrdersFilteringPanel } from '../components/Orders/OrdersFilteringPanel'
 
 const AdminPanel: React.FC<{}> = () => {
    useIsAuth()
@@ -27,10 +28,10 @@ const AdminPanel: React.FC<{}> = () => {
       adminContent = <AdminProductsGrid />
       navbarTitle = 'Admin Products Panel'
    } else if (panel == 3) {
-      adminContent = <OrdersTable filter={false} />
+      adminContent = <OrdersTable />
       navbarTitle = 'Admin Orders Panel'
    } else if (panel == 4) {
-      adminContent = <OrdersTable filter={true} />
+      adminContent = <OrdersFilteringPanel />
       navbarTitle = 'Orders By Status'
    } else {
       adminContent = <></>
