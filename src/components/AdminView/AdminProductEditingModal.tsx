@@ -13,16 +13,18 @@ import {
    Center,
    Image,
    Text,
-   Stack,
-   Input,
-   InputGroup,
-   InputLeftAddon,
 } from '@chakra-ui/react'
 import { Product } from '../../types/ProductType'
 import { Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react'
 import { ChevronDownIcon } from '@chakra-ui/icons'
-import { useCategoryQuery } from '../../generated/graphql'
+import {
+   useCategoryQuery,
+   useUpdateProductMutation,
+} from '../../generated/graphql'
 import { useState } from 'react'
+import { Formik, Form } from 'formik'
+import { toErrorMap } from '../../utils/toErrorMap'
+import { InputField } from '../InputField'
 
 interface ProductModalProps {
    product: Product
@@ -31,13 +33,16 @@ interface ProductModalProps {
 export const AdminProductEditingModal: React.FC<ProductModalProps> = ({
    product,
 }) => {
+   const { id, name, description, unitPrice, unitWeight, categories } = product
    const categoriesQueryResult = useCategoryQuery()
-   const [category, setCategory] = useState('')
+   const [updateProductMutation] = useUpdateProductMutation()
+
+   let categoryName = categories[0] ? categories[0].name : 'Category'
+   const [category, setCategory] = useState(categoryName)
    const productImage = {
       imageUrl: 'https://via.placeholder.com/570x300',
       imageAlt: 'Kill this love',
    }
-   const { name, description, unitPrice, unitWeight, categories } = product
    const { isOpen, onOpen, onClose } = useDisclosure()
    const bgImg =
       "url('https://images.unsplash.com/photo-1530362502708-d02c8f093039?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80')"
@@ -108,94 +113,114 @@ export const AdminProductEditingModal: React.FC<ProductModalProps> = ({
                         </Box>
                      </Box>
 
-                     <Stack spacing={3}>
-                        <InputGroup>
-                           <InputLeftAddon
-                              children="Name"
-                              size="xl"
-                              bg="none"
-                           />
-                           <Input placeholder={name} />
-                        </InputGroup>
-                        <InputGroup>
-                           <InputLeftAddon
-                              children="Weight"
-                              size="xl"
-                              bg="none"
-                           />
-                           <Input placeholder={unitWeight.toString()} />
-                        </InputGroup>
-                        <InputGroup>
-                           <InputLeftAddon
-                              children="Category"
-                              size="xl"
-                              bg="none"
-                           />
-                           <Menu>
-                              <MenuButton
-                                 as={Button}
-                                 variant="outline"
-                                 rightIcon={<ChevronDownIcon />}
-                              >
-                                 {category}
-                              </MenuButton>
-                              <MenuList
-                                 bg="blue.500"
-                                 color="black"
-                                 borderRadius="xl"
-                                 placeholder="e"
-                              >
-                                 {categoriesQueryResult.data?.category.map(
-                                    (category) =>
-                                       !category ? null : (
-                                          <MenuItem
-                                             key={category.name}
-                                             _hover={{
-                                                backgroundColor: 'pink.500',
-                                                color: 'white',
-                                             }}
-                                             onClick={() =>
-                                                setCategory(category.name)
-                                             }
-                                          >
-                                             {category.name}
-                                          </MenuItem>
-                                       )
-                                 )}
-                              </MenuList>
-                           </Menu>
-                        </InputGroup>
-                        <InputGroup>
-                           <InputLeftAddon
-                              children="Description"
-                              size="xl"
-                              bg="none"
-                           />
-                           <Input placeholder={description} />
-                        </InputGroup>
-                        <InputGroup>
-                           <InputLeftAddon
-                              children="Price"
-                              size="xl"
-                              bg="none"
-                           />
-                           <Input placeholder={unitPrice.toString()} />
-                        </InputGroup>
-                     </Stack>
+                     <Formik
+                        validateOnBlur={false}
+                        validateOnChange={false}
+                        initialValues={{
+                           name: ``,
+                           unitPrice: unitPrice,
+                           unitWeight: unitWeight,
+                           description: ``,
+                        }}
+                        onSubmit={async (values, { setErrors }) => {
+                           const response = await updateProductMutation({
+                              variables: {
+                                 input: {
+                                    ...values,
+                                    categories: category,
+                                 },
+                                 updateProductId: id,
+                              },
+                              update: (cache) => {
+                                 cache.evict({
+                                    fieldName: 'products:{}',
+                                 })
+                              },
+                           })
+                           if (response.data?.updateProduct.errors) {
+                              setErrors(
+                                 toErrorMap(response.data.updateProduct.errors)
+                              )
+                           } else {
+                              //TODO: RESPONSE POWIODLO SIE DODANIE PRODUKTU
+                              // ZAMKNIJ MODAL
+                              console.log('dobrze')
+                           }
+                        }}
+                     >
+                        {({ isSubmitting }) => (
+                           <Form>
+                              <InputField
+                                 name="name"
+                                 placeholder={name}
+                                 label="Name"
+                              />
+                              <InputField
+                                 name="unitPrice"
+                                 placeholder={unitPrice.toString()}
+                                 label="Price"
+                                 type="number"
+                              />
+                              <InputField
+                                 name="unitWeight"
+                                 placeholder={unitWeight.toString()}
+                                 label="Weight"
+                                 type="number"
+                              />
+                              <InputField
+                                 name="description"
+                                 placeholder={description}
+                                 label="Description"
+                              />
+                              <Menu>
+                                 <MenuButton
+                                    mt={3}
+                                    as={Button}
+                                    variant="magic"
+                                    rightIcon={<ChevronDownIcon />}
+                                 >
+                                    {category}
+                                 </MenuButton>
+                                 <MenuList
+                                    bg="blue.500"
+                                    color="black"
+                                    borderRadius="xl"
+                                 >
+                                    {categoriesQueryResult.data?.category.map(
+                                       (category) =>
+                                          !category ? null : (
+                                             <MenuItem
+                                                key={category.name}
+                                                _hover={{
+                                                   backgroundColor: 'pink.500',
+                                                   color: 'white',
+                                                }}
+                                                onClick={() =>
+                                                   setCategory(category.name)
+                                                }
+                                             >
+                                                {category.name}
+                                             </MenuItem>
+                                          )
+                                    )}
+                                 </MenuList>
+                              </Menu>
+                              <Center>
+                                 <Button
+                                    mt={4}
+                                    variant="magic"
+                                    isLoading={isSubmitting}
+                                    type="submit"
+                                 >
+                                    Update product
+                                 </Button>
+                              </Center>
+                           </Form>
+                        )}
+                     </Formik>
                   </ModalBody>
 
                   <ModalFooter>
-                     <Box
-                        borderWidth="5px"
-                        borderColor="pink.800"
-                        borderRadius="xl"
-                        bg="pink.300"
-                        mr={3}
-                     >
-                        <Button onClick={onClose} variant="magic-navbar">
-                           Save changes
-                        </Button>
-                     </Box>
                      <Box
                         borderWidth="5px"
                         borderColor="pink.800"

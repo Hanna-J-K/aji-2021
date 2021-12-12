@@ -71,25 +71,30 @@ export const AdminProductAddingModal: React.FC = () => {
                               validateOnChange={false}
                               initialValues={{
                                  name: ``,
-                                 unitPrice: 0.00,
-                                 unitWeight: 0.00,
+                                 unitPrice: 0,
+                                 unitWeight: 0,
                                  description: ``,
                               }}
                               onSubmit={async (values, { setErrors }) => {
-                                 const response = await createProductMutation(
-                                    {
-                                       variables: {
-                                          input: {...values, categories: category}
+                                 const response = await createProductMutation({
+                                    variables: {
+                                       input: {
+                                          ...values,
+                                          categories: category,
                                        },
-                                       update: (cache) => {
-                                          cache.evict({
-                                             fieldName: 'products:{}',
-                                          })
-                                       },
-                                    }
-                                 )
+                                    },
+                                    update: (cache) => {
+                                       cache.evict({
+                                          fieldName: 'products:{}',
+                                       })
+                                    },
+                                 })
                                  if (response.data?.createProduct.errors) {
-                                    setErrors(toErrorMap(response.data.createProduct.errors))
+                                    setErrors(
+                                       toErrorMap(
+                                          response.data.createProduct.errors
+                                       )
+                                    )
                                  } else {
                                     //TODO: RESPONSE POWIODLO SIE DODANIE PRODUKTU
                                     // ZAMKNIJ MODAL
@@ -139,7 +144,7 @@ export const AdminProductAddingModal: React.FC = () => {
                                              (category) =>
                                                 !category ? null : (
                                                    <MenuItem
-                                                   key={category.name}
+                                                      key={category.name}
                                                       _hover={{
                                                          backgroundColor:
                                                             'pink.500',
