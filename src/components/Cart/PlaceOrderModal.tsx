@@ -111,6 +111,7 @@ export const PlaceOrderModal: React.FC<PlaceOrderModalProps> = ({
                               duration: 7000,
                               isClosable: true,
                            })
+                           onClose()
                         }
                      }}
                   >
