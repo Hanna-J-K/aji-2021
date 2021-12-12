@@ -39,17 +39,7 @@ const AdminProductsGrid = () => {
             <Text>Add new products when needed.</Text>
             <Text>Edit or delete products using buttons.</Text>
          </Box>
-         <Box>
-            <Button
-               onClick={async () => {
-                  await logout()
-                  await apolloClient.resetStore()
-                  router.push('/')
-               }}
-            >
-               logout
-            </Button>
-         </Box>
+
          <Center>
             <AdminProductAddingModal />
          </Center>
