@@ -93,11 +93,18 @@ export const OrdersTable: React.FC<{}> = () => {
                               <Box> User contact phone: {order.phone}</Box>
                               <Box fontWeight="semibold">Order status:</Box>
                            </Box>
-                           <Box> User: {order.username}</Box>
-                           <Box> User e-mail: {order.email}</Box>
-                           <Box> User contact phone: {order.phone}</Box>
-                           <Box fontWeight="semibold">
-                              Order status: "{order.status.orderStatus}"
+                           <Box>
+                              <Text fontWeight="semibold">
+                                 Products in this order
+                              </Text>
+                              {placeholderProduct.map((product) => (
+                                 <Box textAlign="end">
+                                    {product.name}: {product.quantity}
+                                 </Box>
+                              ))}
+                              <Text fontWeight="semibold" textAlign="end">
+                                 Total value: $111
+                              </Text>
                            </Box>
                         </Flex>
 
