@@ -12,18 +12,22 @@ import {
    Flex,
    Text,
    IconButton,
+   Center,
 } from '@chakra-ui/react'
-
 import { Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react'
-
 import { EditIcon, ChevronDownIcon } from '@chakra-ui/icons'
-
 import { Order } from '../../types/OrderType'
+import { useState } from 'react'
+import { useUpdateOrderMutation } from '../../generated/graphql'
+import { Form, Formik } from 'formik'
+import { toErrorMap } from '../../utils/toErrorMap'
 
 function OrderEditingModal(props: Order) {
    const { id, orderPlaceDate, username, email, phone, status } = props
    const { isOpen, onOpen, onClose } = useDisclosure()
-
+   const [orderStatus, setOrderStatus] = useState(status)
+   const statuses = ['not confirmed', 'confirmed', 'cancelled', 'completed']
+   const [updateOrder] = useUpdateOrderMutation()
    return (
       <>
          <IconButton
@@ -72,53 +76,83 @@ function OrderEditingModal(props: Order) {
                         <Box> User contact phone: {phone} </Box>
                         <Box fontWeight="semibold">
                            <Text> Order status: {status} </Text>
-                           <Menu>
-                              <MenuButton
-                                 as={Button}
-                                 variant="magic"
-                                 rightIcon={<ChevronDownIcon />}
-                              >
-                                 Edit status
-                              </MenuButton>
-                              <MenuList
-                                 bg="blue.500"
-                                 color="black"
-                                 borderRadius="xl"
-                              >
-                                 <MenuItem
-                                    _hover={{
-                                       backgroundColor: 'pink.500',
-                                       color: 'white',
-                                    }}
-                                 >
-                                    Not confirmed
-                                 </MenuItem>
-                                 <MenuItem
-                                    _hover={{
-                                       backgroundColor: 'pink.500',
-                                       color: 'white',
-                                    }}
-                                 >
-                                    Confirmed
-                                 </MenuItem>
-                                 <MenuItem
-                                    _hover={{
-                                       backgroundColor: 'pink.500',
-                                       color: 'white',
-                                    }}
-                                 >
-                                    Completed
-                                 </MenuItem>
-                                 <MenuItem
-                                    _hover={{
-                                       backgroundColor: 'pink.500',
-                                       color: 'white',
-                                    }}
-                                 >
-                                    Cancelled
-                                 </MenuItem>
-                              </MenuList>
-                           </Menu>
+                           <Formik
+                              validateOnBlur={false}
+                              validateOnChange={false}
+                              initialValues={{
+                                 statusToChange: ``,
+                              }}
+                              onSubmit={async (values, { setErrors }) => {
+                                 const response = await updateOrder({
+                                    variables: {
+                                       status: `${statuses.indexOf(orderStatus) + 1}`,
+                                       updateOrderId: id,
+                                    },
+                                    update: (cache) => {
+                                       cache.evict({
+                                          fieldName: 'orders:{}',
+                                       })
+                                    },
+                                 })
+                                 if (response.data?.updateOrder.errors) {
+                                    setErrors(
+                                       toErrorMap(
+                                          response.data.updateOrder.errors
+                                       )
+                                    )
+                                 } else {
+                                    //TODO: RESPONSE POWIODLO SIE UPDATE ORDEERU
+                                    // ZAMKNIJ MODAL
+                                 }
+                              }}
+                           >
+                              {({ isSubmitting }) => (
+                                 <Form>
+                                    <Menu>
+                                       <MenuButton
+                                          as={Button}
+                                          variant="magic"
+                                          rightIcon={<ChevronDownIcon />}
+                                       >
+                                          {orderStatus}
+                                       </MenuButton>
+                                       <MenuList
+                                          bg="blue.500"
+                                          color="black"
+                                          borderRadius="xl"
+                                       >
+                                          {statuses.map((stat) =>
+                                             !stat ? null : (
+                                                <MenuItem
+                                                   key={stat}
+                                                   _hover={{
+                                                      backgroundColor:
+                                                         'pink.500',
+                                                      color: 'white',
+                                                   }}
+                                                   onClick={() =>
+                                                      setOrderStatus(stat)
+                                                   }
+                                                >
+                                                   {stat}
+                                                </MenuItem>
+                                             )
+                                          )}
+                                       </MenuList>
+                                    </Menu>
+                                    <Center>
+                                       <Button
+                                          mt={4}
+                                          variant="magic"
+                                          isLoading={isSubmitting}
+                                          type="submit"
+                                       >
+                                          Update order
+                                       </Button>
+                                    </Center>
+                                 </Form>
+                              )}
+                           </Formik>
                         </Box>
                      </Box>
                   </ModalBody>
