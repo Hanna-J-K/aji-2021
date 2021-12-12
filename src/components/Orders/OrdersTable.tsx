@@ -79,7 +79,7 @@ export const OrdersTable: React.FC<{}> = () => {
                         <Flex
                            justifyContent="space-between"
                            borderRadius="lg"
-                           boxShadow="0 1px 3px 0 #ffffff"
+                           boxShadow="0 1px 2px 0 #ffffff"
                            p={5}
                            color="white"
                            bg="gray.800"
